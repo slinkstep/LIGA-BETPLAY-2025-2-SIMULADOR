@@ -16,10 +16,12 @@
             transition: background 0.3s ease;
         }
         body.light-theme {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) fixed;
+            background-size: cover;
         }
         body.dark-theme {
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%) fixed;
+            background-size: cover;
         }
         .glass {
             backdrop-filter: blur(10px);
@@ -173,13 +175,306 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
+        /* Prevent scroll on input focus - AGGRESSIVE */
+        html, body {
+            scroll-behavior: auto !important;
+            overflow-anchor: none !important;
+        }
+
+        * {
+            scroll-margin: 0 !important;
+            scroll-padding: 0 !important;
+            scroll-margin-top: 0 !important;
+            scroll-margin-bottom: 0 !important;
+            scroll-margin-left: 0 !important;
+            scroll-margin-right: 0 !important;
+        }
+
+        input[type="number"] {
+            scroll-snap-align: none !important;
+        }
+
+        input[type="number"]:focus,
+        input[type="number"]:focus-visible,
+        input[type="number"]:active {
+            scroll-margin: 0 !important;
+            scroll-margin-block: 0 !important;
+            scroll-margin-inline: 0 !important;
+        }
+
+        /* Prevent layout shift during updates */
+        body, #root {
+            overflow-anchor: none;
+        }
+
+        /* Optimize input rendering to prevent flicker */
+        input[type="number"] {
+            will-change: auto;
+            contain: layout style;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            transition: none !important;
+        }
+
+        /* Prevent table flicker during updates */
+        table {
+            contain: layout;
+        }
+
+        /* Prevent visual jumps in containers */
+        .glass {
+            contain: layout;
+        }
+
+        /* Optimize reclassification table layout */
+        .overflow-x-auto table {
+            table-layout: auto;
+        }
+
+        .overflow-x-auto table td:first-child {
+            width: 50px;
+        }
+
+        .overflow-x-auto table td:nth-child(2) {
+            max-width: 280px;
+            width: auto;
+        }
+
+        /* Ensure stat columns get adequate width */
+        .overflow-x-auto table td:nth-child(n+3) {
+            white-space: nowrap;
+        }
+
+        /* Badge text wrapping */
+        .flex-wrap span {
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            /* Make buttons more touch-friendly */
+            button {
+                min-height: 44px;
+            }
+
+            /* Make tables scroll horizontally on mobile */
+            .overflow-x-auto {
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Adjust table font sizes */
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 4px !important;
+            }
+
+            .team-logo, .team-logo-fallback {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+
+            .position-circle {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+            }
+
+            /* Adjust badge sizes */
+            .advantage-badge,
+            span[class*="px-1"] {
+                font-size: 9px !important;
+                padding: 1px 4px !important;
+            }
+
+            /* Ensure badges wrap properly */
+            .flex-wrap {
+                max-width: 100%;
+            }
+
+            /* Make team names wrap */
+            .font-semibold {
+                word-break: break-word;
+                max-width: 120px;
+                font-size: 12px !important;
+            }
+
+            /* Constrain team column on mobile */
+            td:nth-child(2) {
+                max-width: 180px !important;
+            }
+
+            /* Adjust tab buttons */
+            button[class*="flex-1"] {
+                font-size: 13px;
+                padding: 10px 12px !important;
+                min-width: 80px !important;
+            }
+
+            /* Adjust header */
+            h1 {
+                font-size: 24px !important;
+            }
+
+            h2 {
+                font-size: 18px !important;
+            }
+
+            h3 {
+                font-size: 16px !important;
+            }
+
+            /* Adjust glass containers */
+            .glass {
+                padding: 16px !important;
+            }
+
+            /* Make fixture inputs smaller */
+            input[type="number"] {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 16px !important;
+            }
+
+            /* Adjust grid layouts for mobile */
+            .grid.lg\\:grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid.md\\:grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            /* Adjust container padding */
+            .py-8 {
+                padding-top: 1rem !important;
+                padding-bottom: 1rem !important;
+            }
+
+            .px-4 {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+
+            /* Adjust rounded corners */
+            .rounded-2xl {
+                border-radius: 1rem !important;
+            }
+
+            /* Adjust spacing */
+            .mb-6 {
+                margin-bottom: 1rem !important;
+            }
+
+            .gap-6 {
+                gap: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 2px !important;
+            }
+
+            .team-logo, .team-logo-fallback {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* Hide some columns on very small screens */
+            th:nth-child(n+6):nth-child(-n+8),
+            td:nth-child(n+6):nth-child(-n+8) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 20px !important;
+            }
+
+            h2 {
+                font-size: 16px !important;
+            }
+
+            /* Adjust fixture display */
+            .glass.rounded-xl {
+                padding: 12px !important;
+            }
+
+            /* Make team names in fixtures smaller */
+            .font-semibold.text-gray-800.text-sm {
+                font-size: 11px !important;
+            }
+
+            /* Adjust reset button */
+            .bg-red-500 {
+                font-size: 12px !important;
+                padding: 8px 16px !important;
+            }
+
+            /* Make header responsive */
+            .flex-wrap {
+                justify-content: center !important;
+                text-align: center;
+            }
+        }
+
+        /* Ensure tables can scroll */
+        .table-container {
+            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Scroll indicator */
+        @media (max-width: 768px) {
+            .table-container::after {
+                content: '→';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                background: linear-gradient(to right, transparent, rgba(0,0,0,0.3));
+                padding: 20px 10px;
+                pointer-events: none;
+                opacity: 0.5;
+            }
+
+            .table-container::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .table-container::-webkit-scrollbar-thumb {
+                background: rgba(255,255,255,0.3);
+                border-radius: 2px;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef, useLayoutEffect, useMemo } = React;
 
         const TeamLogo = ({ team }) => {
             const [imgError, setImgError] = useState(false);
@@ -409,6 +704,58 @@
         const LIGA_CAMPEONES_2025 = ['Santa Fe'];
         const COPA_BETPLAY_FINALISTS = ['Independiente Medellín', 'Atlético Nacional'];
 
+        // Function to determine international qualification with cascade logic
+        const getInternationalQualification = (standings) => {
+            const qualifications = {};
+            const libertadoresSet = new Set();
+            const assign = (team, data) => {
+                if (!team || qualifications[team]) return;
+                qualifications[team] = data;
+            };
+
+            // Step 1: Liga champions get Libertadores
+            LIGA_CAMPEONES_2025.forEach(team => {
+                assign(team, { tournament: 'Libertadores', reason: 'Campeón Liga 2025' });
+                libertadoresSet.add(team);
+            });
+
+            // Step 2: Top 2 from reclasificación (excluding champions) get Libertadores
+            let libertadoresByReclas = 0;
+            for (const team of standings) {
+                if (libertadoresSet.has(team.team)) continue;
+                if (libertadoresByReclas < 2) {
+                    assign(team.team, { tournament: 'Libertadores', reason: 'Reclasificación (top 2 sin ser campeón)' });
+                    libertadoresSet.add(team.team);
+                    libertadoresByReclas++;
+                }
+            }
+
+            // Step 3: Copa BetPlay finalists - if they're not in Libertadores, they get Sudamericana
+            const finalistsNotInLibertadores = COPA_BETPLAY_FINALISTS.filter(team => !libertadoresSet.has(team));
+            finalistsNotInLibertadores.forEach(team => {
+                const opponent = COPA_BETPLAY_FINALISTS.find(f => f !== team);
+                assign(team, {
+                    tournament: 'Sudamericana',
+                    reason: `Copa BetPlay 2025: final vs ${opponent}. Si el campeón ya está en Libertadores el cupo pasa al siguiente en reclasificación.`,
+                    pending: true
+                });
+            });
+
+            // Step 4: Fill remaining Sudamericana spots (3-5th in reclasificación, excluding those already qualified)
+            const sudamericanaSlots = 3 + (finalistsNotInLibertadores.length === 0 ? 1 : 0);
+            let sudamericanaCount = 0;
+            for (const team of standings) {
+                if (qualifications[team.team]?.tournament === 'Libertadores') continue;
+                if (qualifications[team.team]?.reason?.startsWith('Copa BetPlay')) continue;
+                if (sudamericanaCount < sudamericanaSlots) {
+                    assign(team.team, { tournament: 'Sudamericana', reason: 'Reclasificación (puestos 3° a 5° sin Libertadores)' });
+                    sudamericanaCount++;
+                }
+            }
+
+            return qualifications;
+        };
+
         const INITIAL_FIXTURES = {
             'A': [
                 { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
@@ -452,12 +799,52 @@
                 return saved ? saved === 'dark' : true; // Default to dark theme
             });
 
+            // Preserve scroll position during updates
+            const scrollPosRef = useRef({ x: 0, y: 0 });
+
+            useEffect(() => {
+                // Lock scroll position during input changes
+                const handleScroll = () => {
+                    if (scrollPosRef.current.locked) {
+                        window.scrollTo(scrollPosRef.current.x, scrollPosRef.current.y);
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll, { passive: false });
+
+                // Override scrollIntoView on all inputs to prevent browser auto-scroll
+                const inputs = document.querySelectorAll('input[type="number"]');
+                const originalScrollIntoView = Element.prototype.scrollIntoView;
+
+                inputs.forEach(input => {
+                    input.scrollIntoView = function() {
+                        // Do nothing - prevent scroll
+                    };
+                });
+
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    Element.prototype.scrollIntoView = originalScrollIntoView;
+                };
+            }, []);
+
             useEffect(() => {
                 localStorage.setItem('ligaBetplayFixtures', JSON.stringify(fixtures));
+
+                // Re-override scrollIntoView after fixtures update
+                setTimeout(() => {
+                    const inputs = document.querySelectorAll('input[type="number"]');
+                    inputs.forEach(input => {
+                        input.scrollIntoView = function() {
+                            // Do nothing - prevent scroll
+                        };
+                    });
+                }, 0);
             }, [fixtures]);
 
             useEffect(() => {
                 document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+                document.documentElement.style.background = isDarkTheme ? '#0f0f1e' : '#764ba2';
                 localStorage.setItem('ligaBetplayTheme', isDarkTheme ? 'dark' : 'light');
             }, [isDarkTheme]);
 
@@ -570,6 +957,11 @@
             };
 
             const updateMatch = (group, index, homeGoals, awayGoals) => {
+                // Lock scroll position
+                scrollPosRef.current.x = window.scrollX;
+                scrollPosRef.current.y = window.scrollY;
+                scrollPosRef.current.locked = true;
+
                 const newFixtures = { ...fixtures };
                 newFixtures[group][index] = {
                     ...newFixtures[group][index],
@@ -578,6 +970,11 @@
                     played: homeGoals !== '' && awayGoals !== ''
                 };
                 setFixtures(newFixtures);
+
+                // Unlock after a short delay
+                setTimeout(() => {
+                    scrollPosRef.current.locked = false;
+                }, 100);
             };
 
             const resetData = () => {
@@ -677,7 +1074,14 @@
                                                         min="0"
                                                         max="99"
                                                         value={match.homeGoals ?? ''}
-                                                        onChange={(e) => updateMatch(group, match.index, e.target.value, match.awayGoals ?? '')}
+                                                        onChange={(e) => {
+                                                            e.preventDefault();
+                                                            updateMatch(group, match.index, e.target.value, match.awayGoals ?? '');
+                                                        }}
+                                                        onFocus={(e) => {
+                                                            scrollPosRef.current.x = window.scrollX;
+                                                            scrollPosRef.current.y = window.scrollY;
+                                                        }}
                                                         className={`w-14 h-12 text-center text-xl font-bold border-2 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none ${isDarkTheme ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                                                         placeholder="-"
                                                     />
@@ -687,7 +1091,14 @@
                                                         min="0"
                                                         max="99"
                                                         value={match.awayGoals ?? ''}
-                                                        onChange={(e) => updateMatch(group, match.index, match.homeGoals ?? '', e.target.value)}
+                                                        onChange={(e) => {
+                                                            e.preventDefault();
+                                                            updateMatch(group, match.index, match.homeGoals ?? '', e.target.value);
+                                                        }}
+                                                        onFocus={(e) => {
+                                                            scrollPosRef.current.x = window.scrollX;
+                                                            scrollPosRef.current.y = window.scrollY;
+                                                        }}
                                                         className={`w-14 h-12 text-center text-xl font-bold border-2 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none ${isDarkTheme ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                                                         placeholder="-"
                                                     />
@@ -820,53 +1231,6 @@
                 const groupAStandings = calculateStandings('A');
                 const groupBStandings = calculateStandings('B');
                 const allPlayoffTeams = [...groupAStandings, ...groupBStandings];
-
-                const getInternationalQualification = (standings) => {
-                    const qualifications = {};
-                    const libertadoresSet = new Set();
-                    const assign = (team, data) => {
-                        if (!team || qualifications[team]) return;
-                        qualifications[team] = data;
-                    };
-
-                    LIGA_CAMPEONES_2025.forEach(team => {
-                        assign(team, { tournament: 'Libertadores', reason: 'Campeón Liga 2025' });
-                        libertadoresSet.add(team);
-                    });
-
-                    let libertadoresByReclas = 0;
-                    for (const team of standings) {
-                        if (libertadoresSet.has(team.team)) continue;
-                        if (libertadoresByReclas < 2) {
-                            assign(team.team, { tournament: 'Libertadores', reason: 'Reclasificación (top 2 sin ser campeón)' });
-                            libertadoresSet.add(team.team);
-                            libertadoresByReclas++;
-                        }
-                    }
-
-                    const finalistsNotInLibertadores = COPA_BETPLAY_FINALISTS.filter(team => !libertadoresSet.has(team));
-                    finalistsNotInLibertadores.forEach(team => {
-                        const opponent = COPA_BETPLAY_FINALISTS.find(f => f !== team);
-                        assign(team, { 
-                            tournament: 'Sudamericana', 
-                            reason: `Copa BetPlay 2025: final vs ${opponent}. Si el campeón ya está en Libertadores el cupo pasa al siguiente en reclasificación.`, 
-                            pending: true 
-                        });
-                    });
-
-                    const sudamericanaSlots = 3 + (finalistsNotInLibertadores.length === 0 ? 1 : 0);
-                    let sudamericanaCount = 0;
-                    for (const team of standings) {
-                        if (qualifications[team.team]?.tournament === 'Libertadores') continue;
-                        if (qualifications[team.team]?.reason?.startsWith('Copa BetPlay')) continue;
-                        if (sudamericanaCount < sudamericanaSlots) {
-                            assign(team.team, { tournament: 'Sudamericana', reason: 'Reclasificación (puestos 3° a 5° sin Libertadores)' });
-                            sudamericanaCount++;
-                        }
-                    }
-
-                    return qualifications;
-                };
                 
                 // Create reclasificación standings for ALL 20 teams (2024-2025 accumulated)
                 const reclasificacionStandings = Object.keys(ALL_TEAMS_RECLASIFICACION).map(teamName => {
@@ -902,6 +1266,7 @@
                     return 0;
                 });
 
+                // Get international qualification using cascade logic
                 const qualificationMap = getInternationalQualification(reclasificacionStandings);
 
                 return (
@@ -910,16 +1275,15 @@
                             <thead>
                                 <tr className={`border-b-2 ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'}`}>
                                     <th className={`text-left py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Pos</th>
-                                    <th className={`text-left py-3 px-4 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Equipo</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PT</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PJ</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PG</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PE</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PP</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GF</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GC</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>DG</th>
-                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Inter 2026</th>
+                                    <th className={`text-left py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Equipo</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PT</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PJ</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PG</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PE</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PP</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GF</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GC</th>
+                                    <th className={`text-center py-3 px-3 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>DG</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -935,50 +1299,47 @@
                                                     {index + 1}
                                                 </div>
                                             </td>
-                                            <td className="py-3 px-4">
-                                                <div className="flex items-center gap-3">
-                                                    <img 
-                                                        src={team.logo} 
-                                                        alt={team.team} 
+                                            <td className="py-3 px-2" style={{maxWidth: '280px'}}>
+                                                <div className="flex items-center gap-2">
+                                                    <img
+                                                        src={team.logo}
+                                                        alt={team.team}
                                                         className="team-logo"
                                                     />
-                                                    <div>
-                                                        <div className={`font-semibold ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>{team.team}</div>
-                                                        {team.inPlayoffs && (
-                                                            <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block ${isDarkTheme ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}>
-                                                                En Cuadrangulares
-                                                            </span>
-                                                        )}
+                                                    <div className="flex-1 min-w-0">
+                                                        <div className={`font-semibold text-sm ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>{team.team}</div>
+                                                        <div className="flex flex-wrap gap-1 mt-0.5">
+                                                            {team.inPlayoffs && (
+                                                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full inline-block leading-tight ${isDarkTheme ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-100 text-purple-700'}`}>
+                                                                    En Cuadrangulares
+                                                                </span>
+                                                            )}
+                                                            {qualification && (
+                                                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full inline-block font-semibold leading-tight ${
+                                                                    qualification.tournament === 'Libertadores'
+                                                                        ? 'bg-blue-600 text-white'
+                                                                        : 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
+                                                                }`}>
+                                                                    {qualification.tournament} - {qualification.reason}
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="text-center py-3 px-2">
-                                                <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                            <td className="text-center py-3 px-3">
+                                                <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-4 py-1.5 rounded-lg text-lg">
                                                     {team.totalPoints}
                                                 </span>
                                             </td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.played}</td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.wins}</td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.draws}</td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.losses}</td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsFor}</td>
-                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsAgainst}</td>
-                                            <td className="text-center py-3 px-2 font-bold" style={{color: goalDiff > 0 ? '#10b981' : goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.played}</td>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.wins}</td>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.draws}</td>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.losses}</td>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsFor}</td>
+                                            <td className={`text-center py-3 px-3 font-semibold text-base ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsAgainst}</td>
+                                            <td className="text-center py-3 px-3 font-bold text-base" style={{color: goalDiff > 0 ? '#10b981' : goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
                                                 {goalDiff > 0 ? '+' : ''}{goalDiff}
-                                            </td>
-                                            <td className="text-center py-3 px-2">
-                                                {qualification ? (
-                                                    <div className="flex flex-col items-center gap-1">
-                                                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${qualification.tournament === 'Libertadores' ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white' : 'bg-gradient-to-r from-sky-500 to-emerald-500 text-white'}`}>
-                                                            {qualification.tournament}{qualification.pending ? ' (pendiente)' : ''}
-                                                        </span>
-                                                        <span className={`text-[11px] leading-tight ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
-                                                            {qualification.reason}
-                                                        </span>
-                                                    </div>
-                                                ) : (
-                                                    <span className={`text-xs ${isDarkTheme ? 'text-gray-500' : 'text-gray-400'}`}>-</span>
-                                                )}
                                             </td>
                                         </tr>
                                     );
@@ -1199,14 +1560,42 @@
                                 </div>
                                 <ReclasificacionTable />
                                 
-                                <div className={`mt-6 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-indigo-900/20 border-indigo-500/50' : 'bg-indigo-50 border-indigo-500'}`}>
+                                {/* International Qualification Legend */}
+                                <div className="mt-6 grid md:grid-cols-2 gap-4">
+                                    <div className={`p-4 rounded-lg border-l-4 border-blue-500 ${isDarkTheme ? 'bg-blue-900/20' : 'bg-blue-50'}`}>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-2xl">🏆</span>
+                                            <h3 className={`font-bold ${isDarkTheme ? 'text-blue-300' : 'text-blue-900'}`}>Copa Libertadores (4 cupos)</h3>
+                                        </div>
+                                        <ul className={`text-sm space-y-1 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                            <li>✅ <strong>Santa Fe</strong> - Campeón Liga I 2024</li>
+                                            <li>⏳ Campeón Liga II 2025 (en disputa)</li>
+                                            <li>• 1° y 2° Reclasificación (si no son campeones)</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div className={`p-4 rounded-lg border-l-4 border-orange-500 ${isDarkTheme ? 'bg-orange-900/20' : 'bg-orange-50'}`}>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-2xl">🎯</span>
+                                            <h3 className={`font-bold ${isDarkTheme ? 'text-orange-300' : 'text-orange-900'}`}>Copa Sudamericana (4 cupos)</h3>
+                                        </div>
+                                        <ul className={`text-sm space-y-1 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                            <li>⏳ Campeón Copa BetPlay (Medellín vs Nacional)</li>
+                                            <li>• 3° Reclasificación</li>
+                                            <li>• 4° Reclasificación</li>
+                                            <li>• 5° Reclasificación</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div className={`mt-4 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-indigo-900/20 border-indigo-500/50' : 'bg-indigo-50 border-indigo-500'}`}>
                                     <p className={`text-sm ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
-                                        <strong>Tabla de Reclasificación 2024-2025:</strong> Muestra las estadísticas acumuladas de todos los equipos durante todo el año, 
-                                        incluyendo la Liga BetPlay I 2024 completa y la Liga BetPlay II 2025 en curso (Fase Regular + Cuadrangulares Semifinales). 
+                                        <strong>Tabla de Reclasificación 2024-2025:</strong> Muestra las estadísticas acumuladas de todos los equipos durante todo el año,
+                                        incluyendo la Liga BetPlay I 2024 completa y la Liga BetPlay II 2025 en curso (Fase Regular + Cuadrangulares Semifinales).
                                         Esta tabla se usa para determinar descensos y clasificaciones a torneos internacionales.
                                     </p>
                                     <p className={`text-sm mt-2 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
-                                        <strong>Torneos internacionales 2026:</strong> Libertadores: campeones del año (Santa Fe + campeón II 2025) y los dos mejores de reclasificación que no sean campeones. 
+                                        <strong>Torneos internacionales 2026:</strong> Libertadores: campeones del año (Santa Fe + campeón II 2025) y los dos mejores de reclasificación que no sean campeones.
                                         Sudamericana: campeón de la Copa BetPlay (final Medellín vs Nacional; si el campeón ya está en Libertadores el cupo pasa al siguiente en la tabla) y los puestos 3° a 5° de la reclasificación sin Libertadores.
                                     </p>
                                 </div>
