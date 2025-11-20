@@ -162,6 +162,7 @@
             justify-content: center;
             border-radius: 50%;
             font-weight: 700;
+            position: relative;
         }
         .qualified {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -273,21 +274,48 @@
             /* Make tables scroll horizontally on mobile */
             .overflow-x-auto {
                 -webkit-overflow-scrolling: touch;
+                display: block;
+                width: 100%;
+                overflow-x: auto;
             }
 
-            /* Adjust table font sizes */
+            /* Force table to maintain structure */
             table {
                 font-size: 12px;
+                min-width: 100%;
+                width: max-content;
+                display: table !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            tbody {
+                display: table-row-group !important;
+            }
+
+            tr {
+                display: table-row !important;
             }
 
             th, td {
+                display: table-cell !important;
                 padding: 8px 4px !important;
+                white-space: nowrap;
+                vertical-align: middle;
+            }
+
+            /* Keep team column from breaking */
+            td:nth-child(2) {
+                white-space: normal !important;
             }
 
             .team-logo, .team-logo-fallback {
                 width: 20px;
                 height: 20px;
                 font-size: 10px;
+                flex-shrink: 0;
             }
 
             .position-circle {
@@ -296,28 +324,105 @@
                 font-size: 12px;
             }
 
-            /* Adjust badge sizes */
-            .advantage-badge,
-            span[class*="px-1"] {
-                font-size: 9px !important;
-                padding: 1px 4px !important;
+            /* Hide qualification badges on mobile to save space */
+            .flex-wrap span:not([class*="Cuadrangulares"]) {
+                display: none !important;
             }
 
-            /* Ensure badges wrap properly */
-            .flex-wrap {
-                max-width: 100%;
+            /* Make "En Cuadrangulares" badge smaller */
+            .flex-wrap span {
+                font-size: 8px !important;
+                padding: 2px 6px !important;
+                line-height: 1.2 !important;
             }
 
-            /* Make team names wrap */
+            /* Make team names more compact */
             .font-semibold {
-                word-break: break-word;
-                max-width: 120px;
-                font-size: 12px !important;
+                font-size: 14px !important;
+                line-height: 1.3;
+                display: block;
             }
 
             /* Constrain team column on mobile */
             td:nth-child(2) {
-                max-width: 180px !important;
+                max-width: 150px !important;
+                padding-left: 4px !important;
+                padding-right: 4px !important;
+            }
+
+            /* Make stat columns more visible */
+            td:nth-child(n+3) {
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                text-align: center !important;
+            }
+
+            /* Smaller PT badge */
+            td:nth-child(3) span {
+                font-size: 15px !important;
+                padding: 6px 10px !important;
+                white-space: nowrap;
+            }
+
+            /* Keep team name row items together */
+            td:nth-child(2) .flex.items-center:not(.flex-wrap) {
+                flex-wrap: nowrap !important;
+            }
+
+            /* Add visual indicator for qualification status on mobile */
+            .position-circle.qualified::after {
+                content: '⚽';
+                position: absolute;
+                top: -4px;
+                right: -4px;
+                font-size: 10px;
+            }
+
+            /* Compact legend for mobile */
+            .glass .grid {
+                display: block !important;
+            }
+
+            .glass .grid > div {
+                margin-bottom: 8px !important;
+                padding: 8px !important;
+            }
+
+            /* Add scroll indicator */
+            .overflow-x-auto::after {
+                content: '← Desliza →';
+                position: sticky;
+                right: 0;
+                bottom: 0;
+                background: rgba(99, 102, 241, 0.9);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 12px 0 0 0;
+                font-size: 10px;
+                text-align: center;
+                pointer-events: none;
+                display: block;
+                width: fit-content;
+                margin-left: auto;
+            }
+
+            /* Better scrollbar */
+            .overflow-x-auto::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            .overflow-x-auto::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.1);
+                border-radius: 3px;
+            }
+
+            .overflow-x-auto::-webkit-scrollbar-thumb {
+                background: rgba(99, 102, 241, 0.6);
+                border-radius: 3px;
+            }
+
+            .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+                background: rgba(99, 102, 241, 0.9);
             }
 
             /* Adjust tab buttons */
@@ -388,23 +493,61 @@
         }
 
         @media (max-width: 480px) {
+            /* Ensure table structure is maintained */
             table {
                 font-size: 11px;
+                display: table !important;
+                min-width: 600px;
             }
 
             th, td {
+                display: table-cell !important;
                 padding: 6px 2px !important;
             }
 
             .team-logo, .team-logo-fallback {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
             }
 
-            /* Hide some columns on very small screens */
-            th:nth-child(n+6):nth-child(-n+8),
-            td:nth-child(n+6):nth-child(-n+8) {
-                display: none;
+            .position-circle {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+
+            /* Hide PE and PP columns on very small screens */
+            th:nth-child(6),
+            td:nth-child(6),
+            th:nth-child(7),
+            td:nth-child(7) {
+                display: none !important;
+            }
+
+            /* Reduce minimum table width on very small screens */
+            table {
+                min-width: 550px !important;
+            }
+
+            /* Make team column even more compact */
+            td:nth-child(2) {
+                max-width: 120px !important;
+                padding: 4px 2px !important;
+            }
+
+            .font-semibold {
+                font-size: 12px !important;
+            }
+
+            /* Even smaller PT badge */
+            td:nth-child(3) span {
+                font-size: 13px !important;
+                padding: 4px 8px !important;
+            }
+
+            /* Compact stat numbers */
+            td:nth-child(n+3) {
+                font-size: 12px !important;
             }
 
             h1 {
