@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -783,6 +784,98 @@
                 border-radius: 2px;
             }
         }
+
+        /* Share button styling */
+        .share-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .share-button:active {
+            transform: translateY(0);
+        }
+
+        .share-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .dark-theme .share-button {
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Share watermark */
+        .share-watermark {
+            text-align: center;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.8;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+
+        .dark-theme .share-watermark {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+        }
+
+        /* Shareable content container */
+        .shareable-content {
+            position: relative;
+        }
+
+        /* Loading overlay */
+        .share-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .share-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .share-loading-text {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -1113,6 +1206,7 @@
                 const saved = localStorage.getItem('ligaBetplayTheme');
                 return saved ? saved === 'dark' : true; // Default to dark theme
             });
+            const [isSharing, setIsSharing] = useState(false);
 
             // Preserve scroll position during updates
             const scrollPosRef = useRef({ x: 0, y: 0 });
@@ -1296,6 +1390,93 @@
                 if (confirm('¿Estás seguro de que quieres reiniciar todos los resultados?')) {
                     setFixtures(INITIAL_FIXTURES);
                     localStorage.removeItem('ligaBetplayFixtures');
+                }
+            };
+
+            const handleShare = async () => {
+                setIsSharing(true);
+
+                try {
+                    // Get the shareable content element
+                    const element = document.querySelector('.shareable-content');
+                    if (!element) {
+                        throw new Error('Contenido no encontrado');
+                    }
+
+                    // Hide elements we don't want in the screenshot
+                    const elementsToHide = [
+                        '.theme-toggle',
+                        '.share-button',
+                        'input[type="number"]'
+                    ];
+
+                    const hiddenElements = [];
+                    elementsToHide.forEach(selector => {
+                        document.querySelectorAll(selector).forEach(el => {
+                            hiddenElements.push({ el, display: el.style.display });
+                            el.style.display = 'none';
+                        });
+                    });
+
+                    // Wait a bit for layout to settle
+                    await new Promise(resolve => setTimeout(resolve, 100));
+
+                    // Generate the image
+                    const canvas = await html2canvas(element, {
+                        backgroundColor: isDarkTheme ? '#1a1a2e' : '#764ba2',
+                        scale: 2,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true,
+                        width: Math.min(element.scrollWidth, 1200),
+                        windowWidth: 1200
+                    });
+
+                    // Restore hidden elements
+                    hiddenElements.forEach(({ el, display }) => {
+                        el.style.display = display;
+                    });
+
+                    // Convert to blob
+                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.95));
+                    const file = new File([blob], 'mi-simulacion-betplay-2025.png', { type: 'image/png' });
+
+                    // Get winners for share text
+                    const groupAStandings = calculateStandings('A');
+                    const groupBStandings = calculateStandings('B');
+                    const groupAWinner = groupAStandings[0]?.team || 'TBD';
+                    const groupBWinner = groupBStandings[0]?.team || 'TBD';
+
+                    const shareText = `🏆 Mi Simulación Liga BetPlay 2025\n\n` +
+                        `Grupo A: ${groupAWinner}\n` +
+                        `Grupo B: ${groupBWinner}\n\n` +
+                        `¿Quién crees que ganará? 🤔`;
+
+                    // Try native share (works on mobile)
+                    if (navigator.share && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: 'Mi Simulación Liga BetPlay 2025',
+                            text: shareText
+                        });
+                    } else {
+                        // Fallback: download the image
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'mi-simulacion-betplay-2025.png';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+
+                        alert('¡Imagen descargada! Compártela en tus redes sociales 📱');
+                    }
+                } catch (error) {
+                    console.error('Error al compartir:', error);
+                    alert('Error al generar la imagen. Por favor intenta de nuevo.');
+                } finally {
+                    setIsSharing(false);
                 }
             };
 
@@ -1699,6 +1880,20 @@
                                 </div>
                             </div>
 
+                        {/* Share Button */}
+                        <div className="text-center mb-6">
+                            <button
+                                onClick={handleShare}
+                                disabled={isSharing}
+                                className="share-button"
+                            >
+                                <span>{isSharing ? '⏳' : '📤'}</span>
+                                <span>{isSharing ? 'Generando imagen...' : 'Compartir Mi Simulación'}</span>
+                            </button>
+                        </div>
+
+                        {/* Shareable Content */}
+                        <div className="shareable-content">
                         {/* Tabs */}
                         <div className="glass rounded-2xl p-2 mb-6 shadow-lg">
                             <div className="flex flex-wrap gap-2">
@@ -1920,8 +2115,29 @@
                                 </div>
                             </div>
                         )}
+
+                        {/* Watermark for shared images */}
+                        <div className="share-watermark">
+                            <div className={`${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>
+                                🏆 Liga BetPlay 2025 - Simulador de Cuadrangulares
+                            </div>
+                            <div className={`text-sm mt-1 ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+                                Simula tu propia predicción en: ligabetplay2025.com
+                            </div>
+                        </div>
+
+                        </div>
+                        {/* End Shareable Content */}
                     </div>
                 </div>
+
+                {/* Loading Overlay */}
+                {isSharing && (
+                    <div className="share-loading">
+                        <div className="share-loading-spinner"></div>
+                        <div className="share-loading-text">Generando tu imagen...</div>
+                    </div>
+                )}
                 </>
             );
         }
