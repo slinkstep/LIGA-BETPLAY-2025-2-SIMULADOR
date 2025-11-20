@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liga BetPlay 2025 - Cuadrangulares</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+        body.light-theme {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        body.dark-theme {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+        }
+        .glass {
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        .light-theme .glass {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark-theme .glass {
+            background: rgba(30, 30, 46, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark-theme .text-gray-900 {
+            color: #e0e0e0 !important;
+        }
+        .dark-theme .text-gray-800 {
+            color: #d0d0d0 !important;
+        }
+        .dark-theme .text-gray-700 {
+            color: #b0b0b0 !important;
+        }
+        .dark-theme .text-gray-600 {
+            color: #909090 !important;
+        }
+        .dark-theme .border-gray-200 {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        .dark-theme .border-gray-100 {
+            border-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        .dark-theme .hover\:bg-gray-50:hover {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+        .dark-theme .hover\:bg-gray-100:hover {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        .dark-theme .bg-gray-200 {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+        }
+        .dark-theme .bg-blue-50 {
+            background-color: rgba(59, 130, 246, 0.1) !important;
+        }
+        .dark-theme .bg-green-50 {
+            background-color: rgba(34, 197, 94, 0.1) !important;
+        }
+        .dark-theme .bg-yellow-50 {
+            background-color: rgba(234, 179, 8, 0.1) !important;
+        }
+        .dark-theme .bg-purple-50 {
+            background-color: rgba(168, 85, 247, 0.1) !important;
+        }
+        .dark-theme .bg-indigo-50 {
+            background-color: rgba(99, 102, 241, 0.1) !important;
+        }
+        .dark-theme .text-blue-700 {
+            color: #93c5fd !important;
+        }
+        .dark-theme .text-green-700 {
+            color: #86efac !important;
+        }
+        .dark-theme .text-green-900 {
+            color: #bbf7d0 !important;
+        }
+        .dark-theme .text-yellow-700 {
+            color: #fde047 !important;
+        }
+        .dark-theme .text-purple-900 {
+            color: #e9d5ff !important;
+        }
+        .dark-theme .border-purple-200 {
+            border-color: rgba(168, 85, 247, 0.3) !important;
+        }
+        .dark-theme .border-blue-500 {
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+        .dark-theme .border-green-500 {
+            border-color: rgba(34, 197, 94, 0.5) !important;
+        }
+        .dark-theme .border-yellow-500 {
+            border-color: rgba(234, 179, 8, 0.5) !important;
+        }
+        .dark-theme .bg-white {
+            background-color: rgba(50, 50, 70, 0.5) !important;
+        }
+        .dark-theme .text-gray-500 {
+            color: #a0a0a0 !important;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: white;
+        }
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        .team-logo {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 4px;
+            padding: 2px;
+        }
+        .team-logo-fallback {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .advantage-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .position-circle {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+        }
+        .qualified {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const TeamLogo = ({ team }) => {
+            const [imgError, setImgError] = useState(false);
+            const initials = team.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+
+            if (imgError) {
+                return (
+                    <div className="team-logo-fallback" title={team}>
+                        {initials}
+                    </div>
+                );
+            }
+
+            return (
+                <img 
+                    src={TEAMS[team].logo} 
+                    alt={team} 
+                    className="team-logo"
+                    onError={() => setImgError(true)}
+                />
+            );
+        };
+
+        // Team data with logos from 365scores CDN
+        const TEAMS = {
+            'Independiente Medellín': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8643',
+                advantage: true,
+                leaguePoints: 40
+            },
+            'Deportes Tolima': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/7635',
+                advantage: true,
+                leaguePoints: 38
+            },
+            'Atlético Nacional': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/8640',
+                advantage: false,
+                leaguePoints: 37
+            },
+            'Atlético Bucaramanga': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/10224',
+                advantage: false,
+                leaguePoints: 37
+            },
+            'Atlético Junior': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/7204',
+                advantage: false,
+                leaguePoints: 35
+            },
+            'Fortaleza CEIF': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/9844',
+                advantage: false,
+                leaguePoints: 35
+            },
+            'Santa Fe': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/7644',
+                advantage: false,
+                leaguePoints: 31
+            },
+            'América de Cali': {
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8645',
+                advantage: false,
+                leaguePoints: 29
+            }
+        };
+
+        // Phase I (Regular Season) Statistics - Liga BetPlay II 2025
+        const PHASE_I_STATS = {
+            'Independiente Medellín': { played: 20, wins: 12, draws: 4, losses: 4, goalsFor: 46, goalsAgainst: 28 },
+            'Deportes Tolima': { played: 20, wins: 12, draws: 2, losses: 6, goalsFor: 29, goalsAgainst: 17 },
+            'Atlético Nacional': { played: 20, wins: 10, draws: 7, losses: 3, goalsFor: 38, goalsAgainst: 24 },
+            'Atlético Bucaramanga': { played: 20, wins: 11, draws: 4, losses: 5, goalsFor: 31, goalsAgainst: 20 },
+            'Atlético Junior': { played: 20, wins: 10, draws: 5, losses: 5, goalsFor: 35, goalsAgainst: 25 },
+            'Fortaleza CEIF': { played: 20, wins: 9, draws: 8, losses: 3, goalsFor: 25, goalsAgainst: 19 },
+            'Santa Fe': { played: 20, wins: 8, draws: 7, losses: 5, goalsFor: 21, goalsAgainst: 17 },
+            'América de Cali': { played: 20, wins: 8, draws: 5, losses: 7, goalsFor: 23, goalsAgainst: 19 }
+        };
+
+        // Reclasificación 2024-2025 - ADJUSTED to exclude Jornada 1 playoff games
+        // DIMAYOR table includes Jornada 1 results, so we subtract them to avoid double counting
+        // Jornada 1 results: Junior 1-0 Medellín, Fortaleza 0-1 Tolima, Bucaramanga 1-0 Santa Fe
+        const ALL_TEAMS_RECLASIFICACION = {
+            'Independiente Medellín': { 
+                // Original DIMAYOR: 87 pts, 49 PJ | Subtract Jornada 1: -0 pts, -1 PJ, -0 GF, -1 GC
+                points: 87, played: 48, wins: 24, draws: 15, losses: 9, 
+                goalsFor: 75, goalsAgainst: 45,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8643',
+                phaseIIPoints: 40, inPlayoffs: true
+            },
+            'Deportes Tolima': { 
+                // Original DIMAYOR: 85 pts, 47 PJ | Subtract Jornada 1: -3 pts, -1 PJ, -1 GF, -0 GC
+                points: 82, played: 46, wins: 24, draws: 10, losses: 12, 
+                goalsFor: 68, goalsAgainst: 44,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/7635',
+                phaseIIPoints: 38, inPlayoffs: true
+            },
+            'Atlético Nacional': { 
+                // No Jornada 1 game yet
+                points: 80, played: 46, wins: 22, draws: 14, losses: 10, 
+                goalsFor: 80, goalsAgainst: 50,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/8640',
+                phaseIIPoints: 37, inPlayoffs: true
+            },
+            'Santa Fe': { 
+                // Original DIMAYOR: 80 pts, 49 PJ | Subtract Jornada 1: -0 pts, -1 PJ, -0 GF, -1 GC
+                points: 80, played: 48, wins: 22, draws: 14, losses: 12, 
+                goalsFor: 59, goalsAgainst: 47,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/7644',
+                phaseIIPoints: 31, inPlayoffs: true
+            },
+            'América de Cali': { 
+                // No Jornada 1 game yet
+                points: 77, played: 46, wins: 21, draws: 14, losses: 11, 
+                goalsFor: 59, goalsAgainst: 38,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8645',
+                phaseIIPoints: 29, inPlayoffs: true
+            },
+            'Atlético Junior': { 
+                // Original DIMAYOR: 76 pts, 47 PJ | Subtract Jornada 1: -3 pts, -1 PJ, -1 GF, -0 GC
+                points: 73, played: 46, wins: 20, draws: 13, losses: 13, 
+                goalsFor: 63, goalsAgainst: 49,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/7204',
+                phaseIIPoints: 35, inPlayoffs: true
+            },
+            'Millonarios': { 
+                // Not in playoffs
+                points: 73, played: 46, wins: 20, draws: 13, losses: 13, 
+                goalsFor: 58, goalsAgainst: 47,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v5/Competitors/8637',
+                phaseIIPoints: 26, inPlayoffs: false
+            },
+            'Atlético Bucaramanga': { 
+                // Original DIMAYOR: 69 pts, 41 PJ | Subtract Jornada 1: -3 pts, -1 PJ, -1 GF, -0 GC
+                points: 66, played: 40, wins: 19, draws: 9, losses: 12, 
+                goalsFor: 55, goalsAgainst: 40,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/10224',
+                phaseIIPoints: 37, inPlayoffs: true
+            },
+            'Once Caldas': { 
+                // Not in playoffs
+                points: 63, played: 46, wins: 17, draws: 12, losses: 17, 
+                goalsFor: 51, goalsAgainst: 53,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v6/Competitors/7289',
+                phaseIIPoints: 27, inPlayoffs: false
+            },
+            'Alianza FC': { 
+                // Not in playoffs
+                points: 58, played: 40, wins: 16, draws: 10, losses: 14, 
+                goalsFor: 47, goalsAgainst: 43,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/10209',
+                phaseIIPoints: 29, inPlayoffs: false
+            },
+            'Fortaleza CEIF': { 
+                // Original DIMAYOR: 55 pts, 41 PJ | Subtract Jornada 1: -0 pts, -1 PJ, -0 GF, -1 GC
+                points: 55, played: 40, wins: 14, draws: 13, losses: 13, 
+                goalsFor: 40, goalsAgainst: 44,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/9844',
+                phaseIIPoints: 35, inPlayoffs: true
+            },
+            'Águilas Doradas': { 
+                // Not in playoffs
+                points: 48, played: 40, wins: 11, draws: 15, losses: 14, 
+                goalsFor: 46, goalsAgainst: 46,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/20841',
+                phaseIIPoints: 27, inPlayoffs: false
+            },
+            'Deportivo Pasto': { 
+                // Not in playoffs
+                points: 48, played: 40, wins: 12, draws: 12, losses: 16, 
+                goalsFor: 46, goalsAgainst: 48,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/9048',
+                phaseIIPoints: 19, inPlayoffs: false
+            },
+            'Deportivo Pereira': { 
+                // Not in playoffs
+                points: 46, played: 40, wins: 11, draws: 13, losses: 16, 
+                goalsFor: 41, goalsAgainst: 57,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v7/Competitors/8638',
+                phaseIIPoints: 18, inPlayoffs: false
+            },
+            'Deportivo Cali': { 
+                // Not in playoffs
+                points: 45, played: 40, wins: 10, draws: 15, losses: 15, 
+                goalsFor: 36, goalsAgainst: 45,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8639',
+                phaseIIPoints: 21, inPlayoffs: false
+            },
+            'Llaneros FC': { 
+                // Not in playoffs
+                points: 45, played: 40, wins: 13, draws: 6, losses: 21, 
+                goalsFor: 37, goalsAgainst: 53,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v4/Competitors/10378',
+                phaseIIPoints: 25, inPlayoffs: false
+            },
+            'Envigado FC': { 
+                // Not in playoffs
+                points: 38, played: 40, wins: 9, draws: 11, losses: 20, 
+                goalsFor: 34, goalsAgainst: 51,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8642',
+                phaseIIPoints: 20, inPlayoffs: false
+            },
+            'Unión Magdalena': { 
+                // Not in playoffs
+                points: 32, played: 40, wins: 7, draws: 11, losses: 22, 
+                goalsFor: 36, goalsAgainst: 62,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/9832',
+                phaseIIPoints: 21, inPlayoffs: false
+            },
+            'La Equidad': { 
+                // Not in playoffs
+                points: 24, played: 40, wins: 5, draws: 9, losses: 26, 
+                goalsFor: 27, goalsAgainst: 64,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8542',
+                phaseIIPoints: 14, inPlayoffs: false
+            },
+            'Boyacá Chicó': { 
+                // Not in playoffs - only played 20 games (Liga II 2025 only)
+                points: 36, played: 40, wins: 7, draws: 15, losses: 18, 
+                goalsFor: 28, goalsAgainst: 60,
+                logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/8641',
+                phaseIIPoints: 16, inPlayoffs: false
+            }
+        };
+
+        // Campeones confirmados y finalistas de Copa BetPlay para cupos internacionales 2026
+        const LIGA_CAMPEONES_2025 = ['Santa Fe'];
+        const COPA_BETPLAY_FINALISTS = ['Independiente Medellín', 'Atlético Nacional'];
+
+        const INITIAL_FIXTURES = {
+            'A': [
+                { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
+                { jornada: 1, home: 'Atlético Nacional', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 2, home: 'Independiente Medellín', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 3, home: 'América de Cali', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 3, home: 'Atlético Nacional', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 4, home: 'Independiente Medellín', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 4, home: 'Atlético Junior', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 5, home: 'Atlético Junior', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 5, home: 'Atlético Nacional', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 6, home: 'Independiente Medellín', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 6, home: 'América de Cali', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false }
+            ],
+            'B': [
+                { jornada: 1, home: 'Fortaleza CEIF', away: 'Deportes Tolima', homeGoals: 0, awayGoals: 1, played: true },
+                { jornada: 1, home: 'Atlético Bucaramanga', away: 'Santa Fe', homeGoals: 1, awayGoals: 0, played: true },
+                { jornada: 2, home: 'Santa Fe', away: 'Fortaleza CEIF', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 2, home: 'Deportes Tolima', away: 'Atlético Bucaramanga', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 3, home: 'Santa Fe', away: 'Deportes Tolima', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 3, home: 'Atlético Bucaramanga', away: 'Fortaleza CEIF', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 4, home: 'Deportes Tolima', away: 'Santa Fe', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 4, home: 'Fortaleza CEIF', away: 'Atlético Bucaramanga', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 5, home: 'Fortaleza CEIF', away: 'Santa Fe', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 5, home: 'Atlético Bucaramanga', away: 'Deportes Tolima', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 6, home: 'Santa Fe', away: 'Atlético Bucaramanga', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 6, home: 'Deportes Tolima', away: 'Fortaleza CEIF', homeGoals: null, awayGoals: null, played: false }
+            ]
+        };
+
+        function App() {
+            const [fixtures, setFixtures] = useState(() => {
+                const saved = localStorage.getItem('ligaBetplayFixtures');
+                return saved ? JSON.parse(saved) : INITIAL_FIXTURES;
+            });
+            const [activeTab, setActiveTab] = useState('grupoA');
+            const [editingMatch, setEditingMatch] = useState(null);
+            const [isDarkTheme, setIsDarkTheme] = useState(() => {
+                const saved = localStorage.getItem('ligaBetplayTheme');
+                return saved ? saved === 'dark' : true; // Default to dark theme
+            });
+
+            useEffect(() => {
+                localStorage.setItem('ligaBetplayFixtures', JSON.stringify(fixtures));
+            }, [fixtures]);
+
+            useEffect(() => {
+                document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+                localStorage.setItem('ligaBetplayTheme', isDarkTheme ? 'dark' : 'light');
+            }, [isDarkTheme]);
+
+            const toggleTheme = () => {
+                setIsDarkTheme(!isDarkTheme);
+            };
+
+            const calculateStandings = (group) => {
+                const teams = group === 'A' 
+                    ? ['Atlético Junior', 'Independiente Medellín', 'Atlético Nacional', 'América de Cali']
+                    : ['Deportes Tolima', 'Atlético Bucaramanga', 'Fortaleza CEIF', 'Santa Fe'];
+                
+                const standings = teams.map(team => {
+                    const teamMatches = fixtures[group].filter(m => 
+                        m.played && (m.home === team || m.away === team)
+                    );
+
+                    let points = 0, played = 0, wins = 0, draws = 0, losses = 0;
+                    let goalsFor = 0, goalsAgainst = 0, awayGoalsFor = 0, awayGoalsAgainst = 0;
+
+                    teamMatches.forEach(match => {
+                        played++;
+                        const isHome = match.home === team;
+                        const scored = isHome ? match.homeGoals : match.awayGoals;
+                        const conceded = isHome ? match.awayGoals : match.homeGoals;
+                        
+                        goalsFor += scored;
+                        goalsAgainst += conceded;
+                        
+                        if (!isHome) {
+                            awayGoalsFor += scored;
+                            awayGoalsAgainst += conceded;
+                        }
+
+                        if (scored > conceded) {
+                            wins++;
+                            points += 3;
+                        } else if (scored === conceded) {
+                            draws++;
+                            points += 1;
+                        } else {
+                            losses++;
+                        }
+                    });
+
+                    return {
+                        team,
+                        points,
+                        played,
+                        wins,
+                        draws,
+                        losses,
+                        goalsFor,
+                        goalsAgainst,
+                        goalDiff: goalsFor - goalsAgainst,
+                        awayGoalsFor,
+                        awayGoalsAgainst,
+                        hasAdvantage: TEAMS[team].advantage,
+                        leaguePosition: TEAMS[team].leaguePoints
+                    };
+                });
+
+                // Sort with official DIMAYOR tiebreaker rules (Article 10)
+                standings.sort((a, b) => {
+                    // 1. First by points
+                    if (a.points !== b.points) return b.points - a.points;
+                    
+                    // 2. If tied on points and one has advantage (positions 1-2 from Phase I), they win
+                    if (a.hasAdvantage && !b.hasAdvantage) return -1;
+                    if (!a.hasAdvantage && b.hasAdvantage) return 1;
+                    
+                    // 3. For teams without advantage (or both with/without), apply criteria:
+                    // 3.1 Goal difference in playoffs
+                    if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
+                    
+                    // 3.2 Goals for in playoffs
+                    if (a.goalsFor !== b.goalsFor) return b.goalsFor - a.goalsFor;
+                    
+                    // 3.3 Away goals for in playoffs
+                    if (a.awayGoalsFor !== b.awayGoalsFor) return b.awayGoalsFor - a.awayGoalsFor;
+                    
+                    // 3.4 Away goals against in playoffs (fewer is better)
+                    if (a.awayGoalsAgainst !== b.awayGoalsAgainst) return a.awayGoalsAgainst - b.awayGoalsAgainst;
+                    
+                    // 3.5 Position in Phase I (league points)
+                    return b.leaguePosition - a.leaguePosition;
+                });
+
+                return standings;
+            };
+
+            const getGeneralStandings = () => {
+                const groupA = calculateStandings('A');
+                const groupB = calculateStandings('B');
+                
+                const combined = [...groupA, ...groupB].map(team => ({
+                    ...team,
+                    totalPoints: team.points + TEAMS[team.team].leaguePoints
+                }));
+
+                combined.sort((a, b) => {
+                    if (a.totalPoints !== b.totalPoints) return b.totalPoints - a.totalPoints;
+                    if (a.points !== b.points) return b.points - a.points;
+                    if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
+                    if (a.goalsFor !== b.goalsFor) return b.goalsFor - a.goalsFor;
+                    return TEAMS[b.team].leaguePoints - TEAMS[a.team].leaguePoints;
+                });
+
+                return combined;
+            };
+
+            const updateMatch = (group, index, homeGoals, awayGoals) => {
+                const newFixtures = { ...fixtures };
+                newFixtures[group][index] = {
+                    ...newFixtures[group][index],
+                    homeGoals: homeGoals === '' ? null : parseInt(homeGoals),
+                    awayGoals: awayGoals === '' ? null : parseInt(awayGoals),
+                    played: homeGoals !== '' && awayGoals !== ''
+                };
+                setFixtures(newFixtures);
+            };
+
+            const resetData = () => {
+                if (confirm('¿Estás seguro de que quieres reiniciar todos los resultados?')) {
+                    setFixtures(INITIAL_FIXTURES);
+                    localStorage.removeItem('ligaBetplayFixtures');
+                }
+            };
+
+            const StandingsTable = ({ standings, group }) => (
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead>
+                            <tr className="border-b-2 border-gray-200">
+                                <th className="text-left py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pos</th>
+                                <th className="text-left py-3 px-4 text-xs font-semibold text-gray-600 uppercase">Equipo</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">PJ</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">E</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">P</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GF</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GC</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
+                                <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {standings.map((team, index) => (
+                                <tr key={team.team} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                    <td className="py-3 px-2">
+                                        <div className={`position-circle ${index === 0 ? 'qualified' : 'bg-gray-200 text-gray-700'}`}>
+                                            {index + 1}
+                                        </div>
+                                    </td>
+                                    <td className="py-3 px-4">
+                                        <div className="flex items-center gap-3">
+                                            <TeamLogo team={team.team} />
+                                            <div>
+                                                <div className="font-semibold text-gray-800">{team.team}</div>
+                                                {team.hasAdvantage && (
+                                                    <span className="advantage-badge text-white text-xs px-2 py-0.5 rounded-full mt-1 inline-block">
+                                                        Ventaja Deportiva
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.played}</td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.wins}</td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.draws}</td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.losses}</td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.goalsFor}</td>
+                                    <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.goalsAgainst}</td>
+                                    <td className="text-center py-3 px-2 font-bold" style={{color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
+                                        {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
+                                    </td>
+                                    <td className="text-center py-3 px-2">
+                                        <span className="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                            {team.points}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+
+            const FixturesList = ({ group }) => {
+                const groupedByJornada = fixtures[group].reduce((acc, match, index) => {
+                    if (!acc[match.jornada]) acc[match.jornada] = [];
+                    acc[match.jornada].push({ ...match, index });
+                    return acc;
+                }, {});
+
+                return (
+                    <div className="space-y-6">
+                        {Object.entries(groupedByJornada).map(([jornada, matches]) => (
+                            <div key={jornada}>
+                                <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>
+                                    <span className={`px-3 py-1 rounded-lg ${isDarkTheme ? 'bg-indigo-900/50 text-indigo-300' : 'bg-indigo-100 text-indigo-700'}`}>
+                                        Jornada {jornada}
+                                    </span>
+                                </h3>
+                                <div className="space-y-3">
+                                    {matches.map((match) => (
+                                        <div key={match.index} className="glass rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div className="flex items-center gap-3 flex-1">
+                                                    <TeamLogo team={match.home} />
+                                                    <span className="font-semibold text-gray-800 text-sm">{match.home}</span>
+                                                </div>
+                                                
+                                                <div className="flex items-center gap-3">
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        max="99"
+                                                        value={match.homeGoals ?? ''}
+                                                        onChange={(e) => updateMatch(group, match.index, e.target.value, match.awayGoals ?? '')}
+                                                        className={`w-14 h-12 text-center text-xl font-bold border-2 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none ${isDarkTheme ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                                                        placeholder="-"
+                                                    />
+                                                    <span className={`font-bold text-xl ${isDarkTheme ? 'text-gray-500' : 'text-gray-400'}`}>:</span>
+                                                    <input
+                                                        type="number"
+                                                        min="0"
+                                                        max="99"
+                                                        value={match.awayGoals ?? ''}
+                                                        onChange={(e) => updateMatch(group, match.index, match.homeGoals ?? '', e.target.value)}
+                                                        className={`w-14 h-12 text-center text-xl font-bold border-2 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none ${isDarkTheme ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                                                        placeholder="-"
+                                                    />
+                                                </div>
+
+                                                <div className="flex items-center gap-3 flex-1 justify-end">
+                                                    <span className="font-semibold text-gray-800 text-sm text-right">{match.away}</span>
+                                                    <TeamLogo team={match.away} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                );
+            };
+
+            const GeneralStandingsTable = () => {
+                const standings = getGeneralStandings();
+                const groupAStandings = calculateStandings('A');
+                const groupBStandings = calculateStandings('B');
+                const groupALeader = groupAStandings[0];
+                const groupBLeader = groupBStandings[0];
+                
+                // Determine home advantage for final
+                const groupALeaderTotal = groupALeader.points + TEAMS[groupALeader.team].leaguePoints;
+                const groupBLeaderTotal = groupBLeader.points + TEAMS[groupBLeader.team].leaguePoints;
+                let homeTeam = null;
+                
+                if (groupALeaderTotal > groupBLeaderTotal) {
+                    homeTeam = groupALeader.team;
+                } else if (groupBLeaderTotal > groupALeaderTotal) {
+                    homeTeam = groupBLeader.team;
+                } else {
+                    // Tied on total points - check playoff points
+                    if (groupALeader.points > groupBLeader.points) {
+                        homeTeam = groupALeader.team;
+                    } else if (groupBLeader.points > groupALeader.points) {
+                        homeTeam = groupBLeader.team;
+                    } else {
+                        // Still tied - check if one has advantage
+                        if (groupALeader.hasAdvantage && !groupBLeader.hasAdvantage) {
+                            homeTeam = groupALeader.team;
+                        } else if (groupBLeader.hasAdvantage && !groupALeader.hasAdvantage) {
+                            homeTeam = groupBLeader.team;
+                        }
+                    }
+                }
+                
+                return (
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="border-b-2 border-gray-200">
+                                    <th className="text-left py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pos</th>
+                                    <th className="text-left py-3 px-4 text-xs font-semibold text-gray-600 uppercase">Equipo</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">PJ</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">E</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">P</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GF</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GC</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Cuad.</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Liga</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {standings.map((team, index) => (
+                                    <tr key={team.team} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                        <td className="py-3 px-2">
+                                            <div className={`position-circle ${index === 0 ? 'qualified' : 'bg-gray-200 text-gray-700'}`}>
+                                                {index + 1}
+                                            </div>
+                                        </td>
+                                        <td className="py-3 px-4">
+                                            <div className="flex items-center gap-3">
+                                                <TeamLogo team={team.team} />
+                                                <div>
+                                                    <div className="font-semibold text-gray-800">{team.team}</div>
+                                                    {team.hasAdvantage && (
+                                                        <span className="advantage-badge text-white text-xs px-2 py-0.5 rounded-full mt-1 inline-block">
+                                                            Ventaja Deportiva
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].played + team.played}</td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].wins + team.wins}</td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].draws + team.draws}</td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].losses + team.losses}</td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsFor + team.goalsFor}</td>
+                                        <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst}</td>
+                                        <td className="text-center py-3 px-2 font-bold" style={{color: (() => {
+                                            const totalDiff = (PHASE_I_STATS[team.team].goalsFor + team.goalsFor) - (PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst);
+                                            return totalDiff > 0 ? '#10b981' : totalDiff < 0 ? '#ef4444' : '#6b7280';
+                                        })()}}>
+                                            {(() => {
+                                                const totalDiff = (PHASE_I_STATS[team.team].goalsFor + team.goalsFor) - (PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst);
+                                                return totalDiff > 0 ? '+' + totalDiff : totalDiff;
+                                            })()}
+                                        </td>
+                                        <td className="text-center py-3 px-2">
+                                            <span className="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                                {team.points}
+                                            </span>
+                                        </td>
+                                        <td className="text-center py-3 px-2 text-gray-600 font-medium">
+                                            {TEAMS[team.team].leaguePoints}
+                                        </td>
+                                        <td className="text-center py-3 px-2">
+                                            <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                                {team.totalPoints}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            };
+
+            const ReclasificacionTable = () => {
+                // Get playoff standings for current teams in playoffs
+                const groupAStandings = calculateStandings('A');
+                const groupBStandings = calculateStandings('B');
+                const allPlayoffTeams = [...groupAStandings, ...groupBStandings];
+
+                const getInternationalQualification = (standings) => {
+                    const qualifications = {};
+                    const libertadoresSet = new Set();
+                    const assign = (team, data) => {
+                        if (!team || qualifications[team]) return;
+                        qualifications[team] = data;
+                    };
+
+                    LIGA_CAMPEONES_2025.forEach(team => {
+                        assign(team, { tournament: 'Libertadores', reason: 'Campeón Liga 2025' });
+                        libertadoresSet.add(team);
+                    });
+
+                    let libertadoresByReclas = 0;
+                    for (const team of standings) {
+                        if (libertadoresSet.has(team.team)) continue;
+                        if (libertadoresByReclas < 2) {
+                            assign(team.team, { tournament: 'Libertadores', reason: 'Reclasificación (top 2 sin ser campeón)' });
+                            libertadoresSet.add(team.team);
+                            libertadoresByReclas++;
+                        }
+                    }
+
+                    const finalistsNotInLibertadores = COPA_BETPLAY_FINALISTS.filter(team => !libertadoresSet.has(team));
+                    finalistsNotInLibertadores.forEach(team => {
+                        const opponent = COPA_BETPLAY_FINALISTS.find(f => f !== team);
+                        assign(team, { 
+                            tournament: 'Sudamericana', 
+                            reason: `Copa BetPlay 2025: final vs ${opponent}. Si el campeón ya está en Libertadores el cupo pasa al siguiente en reclasificación.`, 
+                            pending: true 
+                        });
+                    });
+
+                    const sudamericanaSlots = 3 + (finalistsNotInLibertadores.length === 0 ? 1 : 0);
+                    let sudamericanaCount = 0;
+                    for (const team of standings) {
+                        if (qualifications[team.team]?.tournament === 'Libertadores') continue;
+                        if (qualifications[team.team]?.reason?.startsWith('Copa BetPlay')) continue;
+                        if (sudamericanaCount < sudamericanaSlots) {
+                            assign(team.team, { tournament: 'Sudamericana', reason: 'Reclasificación (puestos 3° a 5° sin Libertadores)' });
+                            sudamericanaCount++;
+                        }
+                    }
+
+                    return qualifications;
+                };
+                
+                // Create reclasificación standings for ALL 20 teams (2024-2025 accumulated)
+                const reclasificacionStandings = Object.keys(ALL_TEAMS_RECLASIFICACION).map(teamName => {
+                    const teamData = ALL_TEAMS_RECLASIFICACION[teamName];
+                    
+                    // Only add playoff stats if team is in playoffs
+                    let playoffStats = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, points: 0 };
+                    if (teamData.inPlayoffs) {
+                        const playoffTeam = allPlayoffTeams.find(t => t.team === teamName);
+                        if (playoffTeam) {
+                            playoffStats = playoffTeam;
+                        }
+                    }
+                    
+                    return {
+                        team: teamName,
+                        played: teamData.played + playoffStats.played,
+                        wins: teamData.wins + playoffStats.wins,
+                        draws: teamData.draws + playoffStats.draws,
+                        losses: teamData.losses + playoffStats.losses,
+                        goalsFor: teamData.goalsFor + playoffStats.goalsFor,
+                        goalsAgainst: teamData.goalsAgainst + playoffStats.goalsAgainst,
+                        totalPoints: teamData.points + playoffStats.points,
+                        logo: teamData.logo,
+                        inPlayoffs: teamData.inPlayoffs
+                    };
+                }).sort((a, b) => {
+                    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+                    const diffA = a.goalsFor - a.goalsAgainst;
+                    const diffB = b.goalsFor - b.goalsAgainst;
+                    if (diffB !== diffA) return diffB - diffA;
+                    if (b.goalsFor !== a.goalsFor) return b.goalsFor - a.goalsFor;
+                    return 0;
+                });
+
+                const qualificationMap = getInternationalQualification(reclasificacionStandings);
+
+                return (
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className={`border-b-2 ${isDarkTheme ? 'border-gray-700' : 'border-gray-200'}`}>
+                                    <th className={`text-left py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Pos</th>
+                                    <th className={`text-left py-3 px-4 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Equipo</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PT</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PJ</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PG</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PE</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>PP</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GF</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>GC</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>DG</th>
+                                    <th className={`text-center py-3 px-2 text-xs font-semibold uppercase ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Inter 2026</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reclasificacionStandings.map((team, index) => {
+                                    const goalDiff = team.goalsFor - team.goalsAgainst;
+                                    const isQualified = index < 8; // Top 8 qualify to playoffs
+                                    const qualification = qualificationMap[team.team];
+                                    
+                                    return (
+                                        <tr key={team.team} className={`border-b transition-colors ${isDarkTheme ? 'border-gray-800 hover:bg-gray-800/50' : 'border-gray-100 hover:bg-gray-50'}`}>
+                                            <td className="py-3 px-2">
+                                                <div className={`position-circle ${isQualified ? 'qualified' : isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
+                                                    {index + 1}
+                                                </div>
+                                            </td>
+                                            <td className="py-3 px-4">
+                                                <div className="flex items-center gap-3">
+                                                    <img 
+                                                        src={team.logo} 
+                                                        alt={team.team} 
+                                                        className="team-logo"
+                                                    />
+                                                    <div>
+                                                        <div className={`font-semibold ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>{team.team}</div>
+                                                        {team.inPlayoffs && (
+                                                            <span className={`text-xs px-2 py-0.5 rounded-full mt-1 inline-block ${isDarkTheme ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}>
+                                                                En Cuadrangulares
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="text-center py-3 px-2">
+                                                <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                                    {team.totalPoints}
+                                                </span>
+                                            </td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.played}</td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.wins}</td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.draws}</td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.losses}</td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsFor}</td>
+                                            <td className={`text-center py-3 px-2 font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>{team.goalsAgainst}</td>
+                                            <td className="text-center py-3 px-2 font-bold" style={{color: goalDiff > 0 ? '#10b981' : goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
+                                                {goalDiff > 0 ? '+' : ''}{goalDiff}
+                                            </td>
+                                            <td className="text-center py-3 px-2">
+                                                {qualification ? (
+                                                    <div className="flex flex-col items-center gap-1">
+                                                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${qualification.tournament === 'Libertadores' ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white' : 'bg-gradient-to-r from-sky-500 to-emerald-500 text-white'}`}>
+                                                            {qualification.tournament}{qualification.pending ? ' (pendiente)' : ''}
+                                                        </span>
+                                                        <span className={`text-[11px] leading-tight ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+                                                            {qualification.reason}
+                                                        </span>
+                                                    </div>
+                                                ) : (
+                                                    <span className={`text-xs ${isDarkTheme ? 'text-gray-500' : 'text-gray-400'}`}>-</span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                );
+            };
+
+            return (
+                <>
+                    {/* Theme Toggle Button */}
+                    <button 
+                        onClick={toggleTheme}
+                        className="theme-toggle"
+                        title={isDarkTheme ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+                    >
+                        <span>{isDarkTheme ? '☀️' : '🌙'}</span>
+                        <span>{isDarkTheme ? 'Claro' : 'Oscuro'}</span>
+                    </button>
+
+                    <div className="min-h-screen py-8 px-4">
+                        <div className="max-w-7xl mx-auto">
+                            {/* Header */}
+                            <div className="glass rounded-2xl p-8 mb-6 shadow-xl">
+                                <div className="flex items-center justify-between flex-wrap gap-4">
+                                    <div>
+                                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Liga BetPlay 2025</h1>
+                                        <p className="text-gray-600 text-lg">Cuadrangulares Semifinales</p>
+                                    </div>
+                                    <button
+                                        onClick={resetData}
+                                        className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors"
+                                    >
+                                        Reiniciar Resultados
+                                    </button>
+                                </div>
+                            </div>
+
+                        {/* Tabs */}
+                        <div className="glass rounded-2xl p-2 mb-6 shadow-lg">
+                            <div className="flex flex-wrap gap-2">
+                                {['grupoA', 'grupoB', 'general', 'reclasificacion'].map(tab => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveTab(tab)}
+                                        className={`flex-1 min-w-[120px] px-6 py-3 rounded-xl font-semibold transition-all ${
+                                            activeTab === tab
+                                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+                                                : isDarkTheme ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'
+                                        }`}
+                                    >
+                                        {tab === 'grupoA' ? 'Grupo A' : tab === 'grupoB' ? 'Grupo B' : tab === 'general' ? 'Tabla General' : 'Reclasificación'}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Content */}
+                        {activeTab === 'grupoA' && (
+                            <div className="grid lg:grid-cols-2 gap-6">
+                                <div className="glass rounded-2xl p-6 shadow-xl">
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo A</h2>
+                                    <StandingsTable standings={calculateStandings('A')} group="A" />
+                                </div>
+                                <div className="glass rounded-2xl p-6 shadow-xl">
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo A</h2>
+                                    <FixturesList group="A" />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'grupoB' && (
+                            <div className="grid lg:grid-cols-2 gap-6">
+                                <div className="glass rounded-2xl p-6 shadow-xl">
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo B</h2>
+                                    <StandingsTable standings={calculateStandings('B')} group="B" />
+                                </div>
+                                <div className="glass rounded-2xl p-6 shadow-xl">
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo B</h2>
+                                    <FixturesList group="B" />
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'general' && (
+                            <div className="glass rounded-2xl p-6 shadow-xl">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla General de Clasificación</h2>
+                                <GeneralStandingsTable />
+                                
+                                {/* Final Matchup Information */}
+                                <div className="mt-6 space-y-4">
+                                    <div className={`p-6 rounded-xl border-2 ${isDarkTheme ? 'bg-gradient-to-r from-purple-900/20 to-indigo-900/20 border-purple-500/30' : 'bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200'}`}>
+                                        <h3 className={`text-lg font-bold mb-4 flex items-center gap-2 ${isDarkTheme ? 'text-purple-300' : 'text-purple-900'}`}>
+                                            <span className="text-2xl">🏆</span>
+                                            Clasificación a la Final
+                                        </h3>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            {/* Group A Leader */}
+                                            <div className={`rounded-lg p-4 shadow-sm ${isDarkTheme ? 'bg-gray-800/50' : 'bg-white'}`}>
+                                                <div className={`text-xs font-semibold mb-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>LÍDER GRUPO A</div>
+                                                <div className="flex items-center gap-3">
+                                                    <TeamLogo team={calculateStandings('A')[0].team} />
+                                                    <div>
+                                                        <div className={`font-bold ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}`}>{calculateStandings('A')[0].team}</div>
+                                                        <div className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+                                                            {calculateStandings('A')[0].points + TEAMS[calculateStandings('A')[0].team].leaguePoints} pts totales
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            {/* Group B Leader */}
+                                            <div className={`rounded-lg p-4 shadow-sm ${isDarkTheme ? 'bg-gray-800/50' : 'bg-white'}`}>
+                                                <div className={`text-xs font-semibold mb-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>LÍDER GRUPO B</div>
+                                                <div className="flex items-center gap-3">
+                                                    <TeamLogo team={calculateStandings('B')[0].team} />
+                                                    <div>
+                                                        <div className={`font-bold ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}`}>{calculateStandings('B')[0].team}</div>
+                                                        <div className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+                                                            {calculateStandings('B')[0].points + TEAMS[calculateStandings('B')[0].team].leaguePoints} pts totales
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Home Advantage Info */}
+                                        {(() => {
+                                            const groupALeader = calculateStandings('A')[0];
+                                            const groupBLeader = calculateStandings('B')[0];
+                                            const groupATotal = groupALeader.points + TEAMS[groupALeader.team].leaguePoints;
+                                            const groupBTotal = groupBLeader.points + TEAMS[groupBLeader.team].leaguePoints;
+                                            let homeTeam = null;
+                                            let reason = '';
+                                            
+                                            // Article 11: Home advantage determination
+                                            if (groupATotal > groupBTotal) {
+                                                homeTeam = groupALeader.team;
+                                                reason = 'mayor puntuación total (Fase I + Fase II)';
+                                            } else if (groupBTotal > groupATotal) {
+                                                homeTeam = groupBLeader.team;
+                                                reason = 'mayor puntuación total (Fase I + Fase II)';
+                                            } else {
+                                                // Tied on total points - apply Article 11 Paragraph 2 criteria
+                                                if (groupALeader.goalDiff !== groupBLeader.goalDiff) {
+                                                    homeTeam = groupALeader.goalDiff > groupBLeader.goalDiff ? groupALeader.team : groupBLeader.team;
+                                                    reason = 'mejor diferencia de gol en cuadrangulares';
+                                                } else if (groupALeader.goalsFor !== groupBLeader.goalsFor) {
+                                                    homeTeam = groupALeader.goalsFor > groupBLeader.goalsFor ? groupALeader.team : groupBLeader.team;
+                                                    reason = 'mayor cantidad de goles a favor en cuadrangulares';
+                                                } else if (groupALeader.awayGoalsFor !== groupBLeader.awayGoalsFor) {
+                                                    homeTeam = groupALeader.awayGoalsFor > groupBLeader.awayGoalsFor ? groupALeader.team : groupBLeader.team;
+                                                    reason = 'mayor cantidad de goles de visitante en cuadrangulares';
+                                                } else if (groupALeader.awayGoalsAgainst !== groupBLeader.awayGoalsAgainst) {
+                                                    homeTeam = groupALeader.awayGoalsAgainst < groupBLeader.awayGoalsAgainst ? groupALeader.team : groupBLeader.team;
+                                                    reason = 'menor cantidad de goles en contra de visitante en cuadrangulares';
+                                                } else {
+                                                    reason = 'se definirá por sorteo';
+                                                }
+                                            }
+                                            
+                                            return homeTeam ? (
+                                                <div className={`mt-4 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-green-900/20 border-green-500/50' : 'bg-green-50 border-green-500'}`}>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xl">🏠</span>
+                                                        <div>
+                                                            <div className={`font-bold ${isDarkTheme ? 'text-green-300' : 'text-green-900'}`}>Ventaja de Localía</div>
+                                                            <div className={`text-sm ${isDarkTheme ? 'text-green-400' : 'text-green-700'}`}>
+                                                                <strong>{homeTeam}</strong> definirá la final en casa por {reason}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className={`mt-4 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-yellow-900/20 border-yellow-500/50' : 'bg-yellow-50 border-yellow-500'}`}>
+                                                    <div className={`text-sm ${isDarkTheme ? 'text-yellow-300' : 'text-yellow-700'}`}>
+                                                        <strong>Empate total:</strong> La ventaja de localía {reason}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                                
+                                <div className={`mt-6 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-blue-900/20 border-blue-500/50' : 'bg-blue-50 border-blue-500'}`}>
+                                    <p className={`text-sm mb-3 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <strong>Clasificación a la Final:</strong> Los líderes de cada grupo clasifican a la final.
+                                    </p>
+                                    <p className={`text-sm mb-3 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <strong>Criterios de desempate en grupos (Art. 10°):</strong>
+                                    </p>
+                                    <ol className={`text-sm ml-4 space-y-1 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <li>1. Mayor puntuación en cuadrangulares</li>
+                                        <li>2. <strong>Ventaja deportiva:</strong> Si hay empate entre equipos de posiciones 1°-2° vs 3°-8° de Fase I, clasifican los de 1°-2°</li>
+                                        <li>3. Mayor diferencia de gol en cuadrangulares (para equipos 3°-8° o empates entre 1°-2°)</li>
+                                        <li>4. Mayor cantidad de goles a favor en cuadrangulares</li>
+                                        <li>5. Mayor cantidad de goles de visitante en cuadrangulares</li>
+                                        <li>6. Menor cantidad de goles en contra de visitante en cuadrangulares</li>
+                                        <li>7. Mejor posición en la Fase I (Todos contra Todos)</li>
+                                    </ol>
+                                    <p className={`text-sm mt-3 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <strong>Localía en la final (Art. 11°):</strong> El equipo con más puntos totales (Fase I + Fase II) será <strong>visitante en la ida</strong> y <strong>local en la vuelta</strong>. 
+                                        En caso de empate en puntos totales, se aplican los criterios 3-6 anteriores, y finalmente sorteo si persiste el empate.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'reclasificacion' && (
+                            <div className="glass rounded-2xl p-6 shadow-xl">
+                                <div className="mb-6">
+                                    <h2 className={`text-2xl font-bold mb-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>Tabla de Reclasificación 2024-2025</h2>
+                                    <p className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+                                        Estadísticas acumuladas del año: Liga BetPlay I 2024 + Liga BetPlay II 2025 (completa con Cuadrangulares)
+                                    </p>
+                                </div>
+                                <ReclasificacionTable />
+                                
+                                <div className={`mt-6 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-indigo-900/20 border-indigo-500/50' : 'bg-indigo-50 border-indigo-500'}`}>
+                                    <p className={`text-sm ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <strong>Tabla de Reclasificación 2024-2025:</strong> Muestra las estadísticas acumuladas de todos los equipos durante todo el año, 
+                                        incluyendo la Liga BetPlay I 2024 completa y la Liga BetPlay II 2025 en curso (Fase Regular + Cuadrangulares Semifinales). 
+                                        Esta tabla se usa para determinar descensos y clasificaciones a torneos internacionales.
+                                    </p>
+                                    <p className={`text-sm mt-2 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
+                                        <strong>Torneos internacionales 2026:</strong> Libertadores: campeones del año (Santa Fe + campeón II 2025) y los dos mejores de reclasificación que no sean campeones. 
+                                        Sudamericana: campeón de la Copa BetPlay (final Medellín vs Nacional; si el campeón ya está en Libertadores el cupo pasa al siguiente en la tabla) y los puestos 3° a 5° de la reclasificación sin Libertadores.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                </>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
