@@ -335,7 +335,7 @@
             th:nth-child(1), td:nth-child(1),
             th:nth-child(2), td:nth-child(2) {
                 position: sticky !important;
-                z-index: 10;
+                z-index: 100 !important;
                 border-right: 1px solid rgba(0, 0, 0, 0.05);
             }
 
@@ -352,37 +352,31 @@
                 box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             }
 
-            /* Dark theme sticky column backgrounds */
-            .dark-theme th:nth-child(1),
-            .dark-theme th:nth-child(2) {
-                background: rgb(30, 30, 46) !important;
+            /* Dark theme sticky column backgrounds - fully opaque to hide scrolling content */
+            .dark-theme .overflow-x-auto th:nth-child(1),
+            .dark-theme .overflow-x-auto th:nth-child(2),
+            .dark-theme .overflow-x-auto td:nth-child(1),
+            .dark-theme .overflow-x-auto td:nth-child(2) {
+                background-color: rgb(30, 30, 46) !important;
             }
 
-            .dark-theme td:nth-child(1),
-            .dark-theme td:nth-child(2) {
-                background: rgb(30, 30, 46) !important;
+            /* Light theme sticky column backgrounds - fully opaque to hide scrolling content */
+            .light-theme .overflow-x-auto th:nth-child(1),
+            .light-theme .overflow-x-auto th:nth-child(2),
+            .light-theme .overflow-x-auto td:nth-child(1),
+            .light-theme .overflow-x-auto td:nth-child(2) {
+                background-color: rgb(255, 255, 255) !important;
             }
 
-            /* Light theme sticky column backgrounds */
-            .light-theme th:nth-child(1),
-            .light-theme th:nth-child(2) {
-                background: rgb(255, 255, 255) !important;
+            /* Row hover effect - must maintain opacity to hide scrolling content */
+            .dark-theme .overflow-x-auto tbody tr:hover td:nth-child(1),
+            .dark-theme .overflow-x-auto tbody tr:hover td:nth-child(2) {
+                background-color: rgb(40, 42, 70) !important;
             }
 
-            .light-theme td:nth-child(1),
-            .light-theme td:nth-child(2) {
-                background: rgb(255, 255, 255) !important;
-            }
-
-            /* Row hover effect */
-            .dark-theme tbody tr:hover td:nth-child(1),
-            .dark-theme tbody tr:hover td:nth-child(2) {
-                background: rgb(40, 42, 70) !important;
-            }
-
-            .light-theme tbody tr:hover td:nth-child(1),
-            .light-theme tbody tr:hover td:nth-child(2) {
-                background: rgb(238, 239, 250) !important;
+            .light-theme .overflow-x-auto tbody tr:hover td:nth-child(1),
+            .light-theme .overflow-x-auto tbody tr:hover td:nth-child(2) {
+                background-color: rgb(238, 239, 250) !important;
             }
 
             /* Fixed column widths - show ALL columns, force table wider than viewport */
@@ -522,21 +516,23 @@
                 padding: 8px !important;
             }
 
-            /* Scroll indicator for stats */
-            .overflow-x-auto::after {
-                content: '→';
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.8));
-                color: white;
-                padding: 20px 10px;
-                pointer-events: none;
-                font-size: 18px;
-                font-weight: bold;
-                opacity: 0.7;
-                z-index: 5;
+            /* Scroll indicator for stats - desktop only */
+            @media (min-width: 769px) {
+                .overflow-x-auto::after {
+                    content: '→';
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: linear-gradient(to right, transparent, rgba(99, 102, 241, 0.8));
+                    color: white;
+                    padding: 20px 10px;
+                    pointer-events: none;
+                    font-size: 18px;
+                    font-weight: bold;
+                    opacity: 0.7;
+                    z-index: 5;
+                }
             }
 
             /* Hide scroll indicator when scrolled to the right */
