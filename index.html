@@ -271,19 +271,17 @@
                 min-height: 44px;
             }
 
-            /* Make tables scroll horizontally on mobile */
+            /* Tables fit without scrolling on mobile */
             .overflow-x-auto {
-                -webkit-overflow-scrolling: touch;
-                display: block;
                 width: 100%;
-                overflow-x: auto;
+                overflow-x: visible;
             }
 
-            /* Force table to maintain structure */
+            /* Optimize table to fit without scrolling */
             table {
-                font-size: 12px;
-                min-width: 100%;
-                width: max-content;
+                font-size: 11px;
+                width: 100%;
+                table-layout: fixed;
                 display: table !important;
             }
 
@@ -301,27 +299,46 @@
 
             th, td {
                 display: table-cell !important;
-                padding: 8px 4px !important;
-                white-space: nowrap;
+                padding: 6px 2px !important;
                 vertical-align: middle;
             }
 
-            /* Keep team column from breaking */
+            /* Hide less important columns on mobile */
+            th:nth-child(6), /* PE (Draws) */
+            td:nth-child(6),
+            th:nth-child(7), /* PP (Losses) */
+            td:nth-child(7),
+            th:nth-child(9), /* GC (Goals Against) */
+            td:nth-child(9) {
+                display: none !important;
+            }
+
+            /* Column widths */
+            th:nth-child(1), td:nth-child(1) { width: 40px; } /* POS */
+            th:nth-child(2), td:nth-child(2) { width: auto; min-width: 100px; } /* EQUIPO */
+            th:nth-child(3), td:nth-child(3) { width: 50px; } /* PT */
+            th:nth-child(4), td:nth-child(4) { width: 35px; } /* PJ */
+            th:nth-child(5), td:nth-child(5) { width: 35px; } /* PG */
+            th:nth-child(8), td:nth-child(8) { width: 35px; } /* GF */
+            th:nth-child(10), td:nth-child(10) { width: 45px; } /* DG */
+
+            /* Allow team names to wrap */
             td:nth-child(2) {
                 white-space: normal !important;
+                word-wrap: break-word;
             }
 
             .team-logo, .team-logo-fallback {
-                width: 20px;
-                height: 20px;
-                font-size: 10px;
+                width: 18px;
+                height: 18px;
+                font-size: 9px;
                 flex-shrink: 0;
             }
 
             .position-circle {
-                width: 24px;
-                height: 24px;
-                font-size: 12px;
+                width: 26px;
+                height: 26px;
+                font-size: 11px;
             }
 
             /* Hide qualification badges on mobile to save space */
@@ -338,30 +355,44 @@
 
             /* Make team names more compact */
             .font-semibold {
-                font-size: 14px !important;
-                line-height: 1.3;
+                font-size: 12px !important;
+                line-height: 1.2;
                 display: block;
             }
 
-            /* Constrain team column on mobile */
+            /* Team column styling */
             td:nth-child(2) {
-                max-width: 150px !important;
-                padding-left: 4px !important;
-                padding-right: 4px !important;
+                padding-left: 3px !important;
+                padding-right: 3px !important;
+            }
+
+            /* Compact team name container */
+            td:nth-child(2) .flex {
+                gap: 4px !important;
             }
 
             /* Make stat columns more visible */
             td:nth-child(n+3) {
-                font-size: 14px !important;
-                font-weight: 600 !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
                 text-align: center !important;
             }
 
             /* Smaller PT badge */
             td:nth-child(3) span {
-                font-size: 15px !important;
-                padding: 6px 10px !important;
+                font-size: 13px !important;
+                padding: 4px 8px !important;
                 white-space: nowrap;
+            }
+
+            /* Center all numbers */
+            th {
+                font-size: 10px !important;
+                text-align: center !important;
+            }
+
+            th:nth-child(2) {
+                text-align: left !important;
             }
 
             /* Keep team name row items together */
@@ -388,42 +419,7 @@
                 padding: 8px !important;
             }
 
-            /* Add scroll indicator */
-            .overflow-x-auto::after {
-                content: '← Desliza →';
-                position: sticky;
-                right: 0;
-                bottom: 0;
-                background: rgba(99, 102, 241, 0.9);
-                color: white;
-                padding: 4px 12px;
-                border-radius: 12px 0 0 0;
-                font-size: 10px;
-                text-align: center;
-                pointer-events: none;
-                display: block;
-                width: fit-content;
-                margin-left: auto;
-            }
-
-            /* Better scrollbar */
-            .overflow-x-auto::-webkit-scrollbar {
-                height: 6px;
-            }
-
-            .overflow-x-auto::-webkit-scrollbar-track {
-                background: rgba(0,0,0,0.1);
-                border-radius: 3px;
-            }
-
-            .overflow-x-auto::-webkit-scrollbar-thumb {
-                background: rgba(99, 102, 241, 0.6);
-                border-radius: 3px;
-            }
-
-            .overflow-x-auto::-webkit-scrollbar-thumb:hover {
-                background: rgba(99, 102, 241, 0.9);
-            }
+            /* No horizontal scroll needed - remove indicator and scrollbar styling */
 
             /* Adjust tab buttons */
             button[class*="flex-1"] {
@@ -493,16 +489,14 @@
         }
 
         @media (max-width: 480px) {
-            /* Ensure table structure is maintained */
+            /* Even more compact on very small screens */
             table {
-                font-size: 11px;
-                display: table !important;
-                min-width: 600px;
+                font-size: 10px !important;
+                width: 100%;
             }
 
             th, td {
-                display: table-cell !important;
-                padding: 6px 2px !important;
+                padding: 4px 1px !important;
             }
 
             .team-logo, .team-logo-fallback {
@@ -511,43 +505,53 @@
             }
 
             .position-circle {
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
                 font-size: 10px;
             }
 
-            /* Hide PE and PP columns on very small screens */
-            th:nth-child(6),
-            td:nth-child(6),
-            th:nth-child(7),
-            td:nth-child(7) {
-                display: none !important;
-            }
-
-            /* Reduce minimum table width on very small screens */
-            table {
-                min-width: 550px !important;
-            }
+            /* Tighter column widths on very small screens */
+            th:nth-child(1), td:nth-child(1) { width: 35px; }
+            th:nth-child(2), td:nth-child(2) { min-width: 90px; }
+            th:nth-child(3), td:nth-child(3) { width: 45px; }
+            th:nth-child(4), td:nth-child(4) { width: 30px; }
+            th:nth-child(5), td:nth-child(5) { width: 30px; }
+            th:nth-child(8), td:nth-child(8) { width: 30px; }
+            th:nth-child(10), td:nth-child(10) { width: 40px; }
 
             /* Make team column even more compact */
             td:nth-child(2) {
-                max-width: 120px !important;
                 padding: 4px 2px !important;
             }
 
             .font-semibold {
-                font-size: 12px !important;
+                font-size: 11px !important;
             }
 
             /* Even smaller PT badge */
             td:nth-child(3) span {
-                font-size: 13px !important;
-                padding: 4px 8px !important;
+                font-size: 11px !important;
+                padding: 3px 6px !important;
             }
 
             /* Compact stat numbers */
             td:nth-child(n+3) {
-                font-size: 12px !important;
+                font-size: 11px !important;
+            }
+
+            /* Smaller headers */
+            th {
+                font-size: 9px !important;
+            }
+
+            /* Hide "En Cuadrangulares" badge on very small screens */
+            .flex-wrap span {
+                display: none !important;
+            }
+
+            /* More compact team logo spacing */
+            td:nth-child(2) .flex {
+                gap: 3px !important;
             }
 
             h1 {
