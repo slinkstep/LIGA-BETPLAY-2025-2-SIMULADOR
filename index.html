@@ -257,6 +257,21 @@
         @media (max-width: 768px) {
             body {
                 padding: 0;
+                overflow-x: hidden;
+                max-width: 100vw;
+            }
+
+            .container, .max-w-7xl {
+                max-width: 100vw !important;
+                overflow-x: hidden;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .glass {
+                margin: 12px !important;
+                padding: 16px 12px !important;
+                overflow: hidden !important;
             }
 
             .theme-toggle {
@@ -273,16 +288,20 @@
 
             /* Tables with fixed left columns and scrollable stats */
             .overflow-x-auto {
-                width: 100%;
+                width: 100% !important;
                 overflow-x: auto;
+                overflow-y: visible;
                 position: relative;
                 -webkit-overflow-scrolling: touch;
+                margin: 0 -12px !important;
+                padding: 0 12px !important;
             }
 
-            /* Optimize table layout */
+            /* Optimize table layout - must be wider than container to scroll */
             table {
                 font-size: 12px;
-                width: 100%;
+                width: max-content;
+                min-width: 100%;
                 display: table !important;
                 border-collapse: separate;
                 border-spacing: 0;
@@ -302,16 +321,22 @@
 
             th, td {
                 display: table-cell !important;
-                padding: 8px 3px !important;
+                padding: 10px 6px !important;
                 vertical-align: middle;
+                box-sizing: border-box;
             }
 
-            /* Sticky first 3 columns: POS, EQUIPO, PT */
+            /* First cell extra padding */
+            th:nth-child(1), td:nth-child(1) {
+                padding-left: 8px !important;
+            }
+
+            /* Sticky first 2 columns: POS, EQUIPO */
             th:nth-child(1), td:nth-child(1),
-            th:nth-child(2), td:nth-child(2),
-            th:nth-child(3), td:nth-child(3) {
+            th:nth-child(2), td:nth-child(2) {
                 position: sticky !important;
                 z-index: 10;
+                border-right: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             th:nth-child(1), td:nth-child(1) {
@@ -319,71 +344,63 @@
             }
 
             th:nth-child(2), td:nth-child(2) {
-                left: 45px;
+                left: 50px;
             }
 
-            th:nth-child(3), td:nth-child(3) {
-                left: 85px;
+            /* Shadow on last sticky column */
+            th:nth-child(2), td:nth-child(2) {
                 box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             }
 
             /* Dark theme sticky column backgrounds */
             .dark-theme th:nth-child(1),
-            .dark-theme th:nth-child(2),
-            .dark-theme th:nth-child(3) {
+            .dark-theme th:nth-child(2) {
                 background: rgba(30, 30, 46, 0.98) !important;
             }
 
             .dark-theme td:nth-child(1),
-            .dark-theme td:nth-child(2),
-            .dark-theme td:nth-child(3) {
+            .dark-theme td:nth-child(2) {
                 background: rgba(30, 30, 46, 0.95) !important;
             }
 
             /* Light theme sticky column backgrounds */
             .light-theme th:nth-child(1),
-            .light-theme th:nth-child(2),
-            .light-theme th:nth-child(3) {
+            .light-theme th:nth-child(2) {
                 background: rgba(255, 255, 255, 0.98) !important;
             }
 
             .light-theme td:nth-child(1),
-            .light-theme td:nth-child(2),
-            .light-theme td:nth-child(3) {
+            .light-theme td:nth-child(2) {
                 background: rgba(255, 255, 255, 0.95) !important;
             }
 
             /* Row hover effect */
             .dark-theme tbody tr:hover td:nth-child(1),
-            .dark-theme tbody tr:hover td:nth-child(2),
-            .dark-theme tbody tr:hover td:nth-child(3) {
+            .dark-theme tbody tr:hover td:nth-child(2) {
                 background: rgba(99, 102, 241, 0.15) !important;
             }
 
             .light-theme tbody tr:hover td:nth-child(1),
-            .light-theme tbody tr:hover td:nth-child(2),
-            .light-theme tbody tr:hover td:nth-child(3) {
+            .light-theme tbody tr:hover td:nth-child(2) {
                 background: rgba(99, 102, 241, 0.1) !important;
             }
 
-            /* Hide less important columns on mobile */
-            th:nth-child(6), /* PE (Draws) */
-            td:nth-child(6),
-            th:nth-child(7), /* PP (Losses) */
-            td:nth-child(7),
-            th:nth-child(9), /* GC (Goals Against) */
-            td:nth-child(9) {
-                display: none !important;
+            /* Fixed column widths - show ALL columns, force table wider than viewport */
+            th:nth-child(1), td:nth-child(1) { width: 50px !important; min-width: 50px !important; } /* POS */
+            th:nth-child(2), td:nth-child(2) { width: 45px !important; min-width: 45px !important; } /* EQUIPO (logo) */
+
+            /* All stat columns - scrollable area */
+            th:nth-child(n+3), td:nth-child(n+3) {
+                width: 55px !important;
+                min-width: 55px !important;
+                white-space: nowrap;
             }
 
-            /* Optimized column widths */
-            th:nth-child(1), td:nth-child(1) { width: 45px; min-width: 45px; } /* POS */
-            th:nth-child(2), td:nth-child(2) { width: 40px; min-width: 40px; } /* EQUIPO (logo) */
-            th:nth-child(3), td:nth-child(3) { width: 60px; min-width: 60px; } /* PT */
-            th:nth-child(4), td:nth-child(4) { width: 50px; min-width: 50px; } /* PJ */
-            th:nth-child(5), td:nth-child(5) { width: 50px; min-width: 50px; } /* PG */
-            th:nth-child(8), td:nth-child(8) { width: 50px; min-width: 50px; } /* GF */
-            th:nth-child(10), td:nth-child(10) { width: 55px; min-width: 55px; } /* DG */
+            /* Last column (Pts/Total) slightly wider */
+            th:last-child, td:last-child {
+                width: 65px !important;
+                min-width: 65px !important;
+            }
 
             .position-circle {
                 width: 28px;
@@ -475,6 +492,24 @@
                 top: -4px;
                 right: -4px;
                 font-size: 10px;
+            }
+
+            /* Fix match cards and content clipping */
+            .space-y-6, .space-y-3, .space-y-4 {
+                width: 100% !important;
+                overflow: visible !important;
+            }
+
+            /* Match cards - prevent clipping */
+            .glass.rounded-xl {
+                margin-left: 12px !important;
+                margin-right: 12px !important;
+                width: calc(100% - 24px) !important;
+            }
+
+            /* Tab content sections */
+            .tab-content > div {
+                overflow: visible !important;
             }
 
             /* Compact legend for mobile */
