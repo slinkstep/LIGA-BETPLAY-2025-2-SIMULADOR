@@ -343,20 +343,21 @@
                 padding-left: 8px !important;
             }
 
-            /* Sticky first 2 columns: POS, EQUIPO */
+            /* Sticky first 2 columns: POS, EQUIPO - unified block */
             th:nth-child(1), td:nth-child(1),
             th:nth-child(2), td:nth-child(2) {
                 position: sticky !important;
                 z-index: 100 !important;
-                border-right: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             th:nth-child(1), td:nth-child(1) {
                 left: 0;
+                border-right: none !important; /* No border between unified columns */
             }
 
             th:nth-child(2), td:nth-child(2) {
                 left: 50px;
+                border-right: 1px solid rgba(0, 0, 0, 0.05); /* Only border on right edge */
             }
 
             /* Shadow on last sticky column */
@@ -404,6 +405,23 @@
             .light-theme .overflow-x-auto table tbody tr:hover td:nth-child(1),
             .light-theme .overflow-x-auto table tbody tr:hover td:nth-child(2) {
                 background-color: rgb(238, 239, 250) !important;
+            }
+
+            /* Ensure nested elements in sticky columns don't have transparent backgrounds */
+            .dark-theme .overflow-x-auto table td:nth-child(1) > *,
+            .dark-theme .overflow-x-auto table td:nth-child(2) > * {
+                background-color: transparent !important;
+            }
+
+            .light-theme .overflow-x-auto table td:nth-child(1) > *,
+            .light-theme .overflow-x-auto table td:nth-child(2) > * {
+                background-color: transparent !important;
+            }
+
+            /* Remove any borders between sticky columns */
+            .overflow-x-auto table th:nth-child(1),
+            .overflow-x-auto table td:nth-child(1) {
+                border-right: none !important;
             }
 
             /* Fixed column widths - show ALL columns, force table wider than viewport */
