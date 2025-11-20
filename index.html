@@ -365,29 +365,44 @@
             }
 
             /* Dark theme sticky column backgrounds - fully opaque to hide scrolling content */
-            .dark-theme .overflow-x-auto th:nth-child(1),
-            .dark-theme .overflow-x-auto th:nth-child(2),
-            .dark-theme .overflow-x-auto td:nth-child(1),
-            .dark-theme .overflow-x-auto td:nth-child(2) {
+            /* Apply to all tables with overflow-x-auto wrapper */
+            .dark-theme .overflow-x-auto table th:nth-child(1),
+            .dark-theme .overflow-x-auto table th:nth-child(2),
+            .dark-theme .overflow-x-auto table thead tr th:nth-child(1),
+            .dark-theme .overflow-x-auto table thead tr th:nth-child(2) {
+                background-color: rgb(30, 30, 46) !important;
+            }
+
+            .dark-theme .overflow-x-auto table td:nth-child(1),
+            .dark-theme .overflow-x-auto table td:nth-child(2),
+            .dark-theme .overflow-x-auto table tbody tr td:nth-child(1),
+            .dark-theme .overflow-x-auto table tbody tr td:nth-child(2) {
                 background-color: rgb(30, 30, 46) !important;
             }
 
             /* Light theme sticky column backgrounds - fully opaque to hide scrolling content */
-            .light-theme .overflow-x-auto th:nth-child(1),
-            .light-theme .overflow-x-auto th:nth-child(2),
-            .light-theme .overflow-x-auto td:nth-child(1),
-            .light-theme .overflow-x-auto td:nth-child(2) {
+            .light-theme .overflow-x-auto table th:nth-child(1),
+            .light-theme .overflow-x-auto table th:nth-child(2),
+            .light-theme .overflow-x-auto table thead tr th:nth-child(1),
+            .light-theme .overflow-x-auto table thead tr th:nth-child(2) {
                 background-color: rgb(255, 255, 255) !important;
             }
 
-            /* Row hover effect - must maintain opacity to hide scrolling content */
-            .dark-theme .overflow-x-auto tbody tr:hover td:nth-child(1),
-            .dark-theme .overflow-x-auto tbody tr:hover td:nth-child(2) {
+            .light-theme .overflow-x-auto table td:nth-child(1),
+            .light-theme .overflow-x-auto table td:nth-child(2),
+            .light-theme .overflow-x-auto table tbody tr td:nth-child(1),
+            .light-theme .overflow-x-auto table tbody tr td:nth-child(2) {
+                background-color: rgb(255, 255, 255) !important;
+            }
+
+            /* Row hover effect - must maintain full opacity */
+            .dark-theme .overflow-x-auto table tbody tr:hover td:nth-child(1),
+            .dark-theme .overflow-x-auto table tbody tr:hover td:nth-child(2) {
                 background-color: rgb(40, 42, 70) !important;
             }
 
-            .light-theme .overflow-x-auto tbody tr:hover td:nth-child(1),
-            .light-theme .overflow-x-auto tbody tr:hover td:nth-child(2) {
+            .light-theme .overflow-x-auto table tbody tr:hover td:nth-child(1),
+            .light-theme .overflow-x-auto table tbody tr:hover td:nth-child(2) {
                 background-color: rgb(238, 239, 250) !important;
             }
 
