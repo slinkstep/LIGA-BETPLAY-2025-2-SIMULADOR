@@ -338,11 +338,6 @@
                 box-sizing: border-box;
             }
 
-            /* First cell extra padding */
-            th:nth-child(1), td:nth-child(1) {
-                padding-left: 8px !important;
-            }
-
             /* Sticky first 2 columns: POS, EQUIPO - unified block */
             th:nth-child(1), td:nth-child(1),
             th:nth-child(2), td:nth-child(2) {
@@ -353,12 +348,13 @@
             }
 
             th:nth-child(1), td:nth-child(1) {
-                left: 0;
+                left: -12px; /* Extend into container's left padding */
                 border-right: none !important; /* No border between unified columns */
+                padding-left: 20px !important; /* Compensate for extension + original padding */
             }
 
             th:nth-child(2), td:nth-child(2) {
-                left: 50px;
+                left: 50px; /* Adjusted for extended first column */
                 border-right: 1px solid rgba(0, 0, 0, 0.05); /* Only border on right edge */
             }
 
@@ -427,7 +423,7 @@
             }
 
             /* Fixed column widths - show ALL columns, force table wider than viewport */
-            th:nth-child(1), td:nth-child(1) { width: 50px !important; min-width: 50px !important; } /* POS */
+            th:nth-child(1), td:nth-child(1) { width: 62px !important; min-width: 62px !important; } /* POS - extended to cover left padding */
             th:nth-child(2), td:nth-child(2) { width: 45px !important; min-width: 45px !important; } /* EQUIPO (logo) */
 
             /* All stat columns - scrollable area */
