@@ -408,10 +408,10 @@
                 min-width: 60px !important;
             }
 
-            /* Pts column - emphasized and wider */
-            th:nth-child(5), td:nth-child(5) {
-                width: 65px !important;
-                min-width: 65px !important;
+            /* Pts/Total column - emphasized and wider */
+            th:nth-child(6), td:nth-child(6) {
+                width: 70px !important;
+                min-width: 70px !important;
             }
 
             .position-circle {
@@ -1277,13 +1277,13 @@
                                 <th className="text-left py-3 px-4 text-xs font-semibold text-gray-600 uppercase">Equipo</th>
                                 <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">PJ</th>
                                 <th className="col-goals-combined text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
+                                <th className="col-dif text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
                                 <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts</th>
                                 <th className="col-wins text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
                                 <th className="col-draws text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">E</th>
                                 <th className="col-losses text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">P</th>
                                 <th className="col-gf text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GF</th>
                                 <th className="col-gc text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GC</th>
-                                <th className="col-dif text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1309,6 +1309,9 @@
                                     </td>
                                     <td className="text-center py-3 px-2 text-gray-700 font-medium">{team.played}</td>
                                     <td className="col-goals-combined text-center py-3 px-2 text-gray-700 font-medium">{team.goalsFor}:{team.goalsAgainst}</td>
+                                    <td className="col-dif text-center py-3 px-2 font-bold" style={{color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
+                                        {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
+                                    </td>
                                     <td className="text-center py-3 px-2">
                                         <span className="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
                                             {team.points}
@@ -1319,9 +1322,6 @@
                                     <td className="col-losses text-center py-3 px-2 text-gray-700 font-medium">{team.losses}</td>
                                     <td className="col-gf text-center py-3 px-2 text-gray-700 font-medium">{team.goalsFor}</td>
                                     <td className="col-gc text-center py-3 px-2 text-gray-700 font-medium">{team.goalsAgainst}</td>
-                                    <td className="col-dif text-center py-3 px-2 font-bold" style={{color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'}}>
-                                        {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
-                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -1445,15 +1445,15 @@
                                     <th className="text-left py-3 px-4 text-xs font-semibold text-gray-600 uppercase">Equipo</th>
                                     <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">PJ</th>
                                     <th className="col-goals-combined text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
+                                    <th className="col-dif text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
                                     <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Total</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Cuad.</th>
+                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Liga</th>
                                     <th className="col-wins text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">G</th>
                                     <th className="col-draws text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">E</th>
                                     <th className="col-losses text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">P</th>
                                     <th className="col-gf text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GF</th>
                                     <th className="col-gc text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">GC</th>
-                                    <th className="col-dif text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">DIF</th>
-                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Cuad.</th>
-                                    <th className="text-center py-3 px-2 text-xs font-semibold text-gray-600 uppercase">Pts Liga</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1479,16 +1479,6 @@
                                         </td>
                                         <td className="text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].played + team.played}</td>
                                         <td className="col-goals-combined text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsFor + team.goalsFor}:{PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst}</td>
-                                        <td className="text-center py-3 px-2">
-                                            <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
-                                                {team.totalPoints}
-                                            </span>
-                                        </td>
-                                        <td className="col-wins text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].wins + team.wins}</td>
-                                        <td className="col-draws text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].draws + team.draws}</td>
-                                        <td className="col-losses text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].losses + team.losses}</td>
-                                        <td className="col-gf text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsFor + team.goalsFor}</td>
-                                        <td className="col-gc text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst}</td>
                                         <td className="col-dif text-center py-3 px-2 font-bold" style={{color: (() => {
                                             const totalDiff = (PHASE_I_STATS[team.team].goalsFor + team.goalsFor) - (PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst);
                                             return totalDiff > 0 ? '#10b981' : totalDiff < 0 ? '#ef4444' : '#6b7280';
@@ -1499,6 +1489,11 @@
                                             })()}
                                         </td>
                                         <td className="text-center py-3 px-2">
+                                            <span className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
+                                                {team.totalPoints}
+                                            </span>
+                                        </td>
+                                        <td className="text-center py-3 px-2">
                                             <span className="bg-indigo-600 text-white font-bold px-3 py-1 rounded-lg">
                                                 {team.points}
                                             </span>
@@ -1506,6 +1501,11 @@
                                         <td className="text-center py-3 px-2 text-gray-600 font-medium">
                                             {TEAMS[team.team].leaguePoints}
                                         </td>
+                                        <td className="col-wins text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].wins + team.wins}</td>
+                                        <td className="col-draws text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].draws + team.draws}</td>
+                                        <td className="col-losses text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].losses + team.losses}</td>
+                                        <td className="col-gf text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsFor + team.goalsFor}</td>
+                                        <td className="col-gc text-center py-3 px-2 text-gray-700 font-medium">{PHASE_I_STATS[team.team].goalsAgainst + team.goalsAgainst}</td>
                                     </tr>
                                 ))}
                             </tbody>
