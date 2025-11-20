@@ -729,18 +729,6 @@
 
         /* Scroll indicator */
         @media (max-width: 768px) {
-            .table-container::after {
-                content: '→';
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                background: linear-gradient(to right, transparent, rgba(0,0,0,0.3));
-                padding: 20px 10px;
-                pointer-events: none;
-                opacity: 0.5;
-            }
-
             .table-container::-webkit-scrollbar {
                 height: 4px;
             }
