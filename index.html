@@ -1246,6 +1246,9 @@
             return qualifications;
         };
 
+        // DATA VERSION - Increment this when you update match results to force a refresh
+        const DATA_VERSION = 2; // Updated: Added Nacional 1-0 América result
+
         const INITIAL_FIXTURES = {
             'A': [
                 { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
@@ -1279,7 +1282,17 @@
 
         function App() {
             const [fixtures, setFixtures] = useState(() => {
+                // Check if stored data version matches current version
+                const savedVersion = localStorage.getItem('ligaBetplayDataVersion');
                 const saved = localStorage.getItem('ligaBetplayFixtures');
+
+                // If version doesn't match, clear old data and use new INITIAL_FIXTURES
+                if (savedVersion !== String(DATA_VERSION)) {
+                    localStorage.removeItem('ligaBetplayFixtures');
+                    localStorage.setItem('ligaBetplayDataVersion', String(DATA_VERSION));
+                    return INITIAL_FIXTURES;
+                }
+
                 return saved ? JSON.parse(saved) : INITIAL_FIXTURES;
             });
             const [activeTab, setActiveTab] = useState('grupoA');
@@ -1472,6 +1485,7 @@
                 if (confirm('¿Estás seguro de que quieres reiniciar todos los resultados?')) {
                     setFixtures(INITIAL_FIXTURES);
                     localStorage.removeItem('ligaBetplayFixtures');
+                    localStorage.setItem('ligaBetplayDataVersion', String(DATA_VERSION));
                 }
             };
 
