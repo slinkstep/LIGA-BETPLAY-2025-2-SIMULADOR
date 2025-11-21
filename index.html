@@ -1722,7 +1722,7 @@
                             <tbody>
                                 {standings.map((team, index) => (
                                     <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}`, height: '56px' }}>
-                                        <td style={{ textAlign: 'center', padding: '0', height: '56px', verticalAlign: 'middle' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', height: '56px' }}>
                                             <div style={{
                                                 width: '32px',
                                                 height: '32px',
@@ -1732,14 +1732,13 @@
                                                 justifyContent: 'center',
                                                 fontSize: '14px',
                                                 fontWeight: '700',
-                                                lineHeight: '1',
                                                 background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0',
                                                 color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
                                             }}>
                                                 {index + 1}
                                             </div>
                                         </td>
-                                        <td style={{ padding: '12px 8px', height: '56px', verticalAlign: 'middle' }}>
+                                        <td style={{ padding: '12px 8px', height: '56px' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                                 <div style={{
                                                     width: '32px',
@@ -1769,48 +1768,46 @@
                                                 </span>
                                             </div>
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.played}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.wins}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.draws}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.losses}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.goalsFor}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px', lineHeight: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 0', fontSize: '14px', color: textPrimary, fontWeight: '500', height: '56px' }}>
                                             {team.goalsAgainst}
                                         </td>
                                         <td style={{
                                             textAlign: 'center',
-                                            padding: '0',
+                                            padding: '12px 0',
                                             fontSize: '14px',
                                             fontWeight: '700',
                                             color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280',
-                                            height: '56px',
-                                            lineHeight: '56px'
+                                            height: '56px'
                                         }}>
                                             {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', height: '56px', verticalAlign: 'middle' }}>
-                                            <span style={{
+                                        <td style={{ textAlign: 'center', padding: '12px 0', height: '56px' }}>
+                                            <div style={{
                                                 background: 'linear-gradient(135deg, #667eea, #764ba2)',
                                                 color: 'white',
                                                 fontWeight: '700',
                                                 fontSize: '15px',
                                                 padding: '8px 14px',
                                                 borderRadius: '8px',
-                                                display: 'inline-block',
-                                                lineHeight: '1'
+                                                display: 'inline-block'
                                             }}>
                                                 {team.points}
-                                            </span>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -1886,28 +1883,26 @@
                                             objectFit: 'contain'
                                         }}
                                     />
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
                                         <span style={{
                                             fontSize: '24px',
                                             fontWeight: '800',
-                                            color: '#667eea',
-                                            lineHeight: '1.2'
+                                            color: '#667eea'
                                         }}>
                                             {groupAWinner?.team}
                                         </span>
                                         {homeTeam === groupAWinner?.team && (
                                             <span style={{
-                                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                                background: '#10b981',
                                                 color: 'white',
-                                                fontSize: '10px',
+                                                fontSize: '11px',
                                                 fontWeight: '700',
-                                                padding: '3px 8px',
-                                                borderRadius: '8px',
+                                                padding: '2px 6px',
+                                                borderRadius: '4px',
                                                 textTransform: 'uppercase',
-                                                letterSpacing: '0.5px',
-                                                alignSelf: 'flex-start'
+                                                letterSpacing: '0.3px'
                                             }}>
-                                                🏠 LOCAL
+                                                Local
                                             </span>
                                         )}
                                     </div>
@@ -1920,30 +1915,28 @@
                                     VS
                                 </span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                                        {homeTeam === groupBWinner?.team && (
+                                            <span style={{
+                                                background: '#10b981',
+                                                color: 'white',
+                                                fontSize: '11px',
+                                                fontWeight: '700',
+                                                padding: '2px 6px',
+                                                borderRadius: '4px',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.3px'
+                                            }}>
+                                                Local
+                                            </span>
+                                        )}
                                         <span style={{
                                             fontSize: '24px',
                                             fontWeight: '800',
-                                            color: '#764ba2',
-                                            lineHeight: '1.2'
+                                            color: '#764ba2'
                                         }}>
                                             {groupBWinner?.team}
                                         </span>
-                                        {homeTeam === groupBWinner?.team && (
-                                            <span style={{
-                                                background: 'linear-gradient(135deg, #10b981, #059669)',
-                                                color: 'white',
-                                                fontSize: '10px',
-                                                fontWeight: '700',
-                                                padding: '3px 8px',
-                                                borderRadius: '8px',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.5px',
-                                                alignSelf: 'flex-end'
-                                            }}>
-                                                🏠 LOCAL
-                                            </span>
-                                        )}
                                     </div>
                                     <img
                                         src={TEAMS[groupBWinner?.team].logo}
