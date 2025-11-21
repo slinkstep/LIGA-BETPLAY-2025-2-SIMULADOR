@@ -1722,7 +1722,7 @@
                             <tbody>
                                 {standings.map((team, index) => (
                                     <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}`, height: '56px' }}>
-                                        <td style={{ textAlign: 'center', padding: '0', height: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '0', height: '56px', verticalAlign: 'middle' }}>
                                             <div style={{
                                                 width: '32px',
                                                 height: '32px',
@@ -1732,10 +1732,9 @@
                                                 justifyContent: 'center',
                                                 fontSize: '14px',
                                                 fontWeight: '700',
-                                                lineHeight: '32px',
+                                                lineHeight: '1',
                                                 background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0',
-                                                color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666',
-                                                verticalAlign: 'middle'
+                                                color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
                                             }}>
                                                 {index + 1}
                                             </div>
