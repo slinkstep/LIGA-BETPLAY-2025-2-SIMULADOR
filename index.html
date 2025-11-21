@@ -3,7 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liga BetPlay 2025 - Cuadrangulares</title>
+
+    <!-- Primary Meta Tags -->
+    <title>Simulador Liga BetPlay 2025 II - Cuadrangulares Semifinales | FPC Simulator</title>
+    <meta name="title" content="Simulador Liga BetPlay 2025 II - Cuadrangulares Semifinales | FPC Simulator">
+    <meta name="description" content="Simula los Cuadrangulares Semifinales de la Liga BetPlay 2025 II. Predice resultados, crea tus propias tablas y comparte tus pronósticos del fútbol profesional colombiano.">
+    <meta name="keywords" content="Liga BetPlay, Liga BetPlay 2025, cuadrangulares, semifinales, fútbol colombiano, futbol colombiano, FPC, simulador fútbol, tabla de posiciones, pronósticos fútbol, Dimayor, reclasificación, Atlético Junior, Independiente Medellín, Atlético Nacional, América de Cali, Deportes Tolima, Atlético Bucaramanga, Fortaleza CEIF, Santa Fe, Millonarios, Deportivo Cali, Once Caldas, Deportivo Pereira, Envigado, Jaguares, Deportivo Pasto, Águilas Doradas">
+    <meta name="author" content="FPC Simulator">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <meta name="revisit-after" content="7 days">
+    <meta name="theme-color" content="#667eea">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://fpcsimulator.online/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fpcsimulator.online/">
+    <meta property="og:title" content="Simulador Liga BetPlay 2025 II - Cuadrangulares Semifinales">
+    <meta property="og:description" content="Simula los Cuadrangulares Semifinales de la Liga BetPlay 2025 II. Predice resultados, crea tus propias tablas y comparte tus pronósticos.">
+    <meta property="og:image" content="https://fpcsimulator.online/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:site_name" content="FPC Simulator">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://fpcsimulator.online/">
+    <meta name="twitter:title" content="Simulador Liga BetPlay 2025 II - Cuadrangulares Semifinales">
+    <meta name="twitter:description" content="Simula los Cuadrangulares Semifinales de la Liga BetPlay 2025 II. Predice resultados y comparte tus pronósticos.">
+    <meta name="twitter:image" content="https://fpcsimulator.online/twitter-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "FPC Simulator - Liga BetPlay 2025 II",
+      "applicationCategory": "SportsApplication",
+      "description": "Simulador interactivo de los Cuadrangulares Semifinales de la Liga BetPlay 2025 II. Predice resultados y crea tus propias tablas del fútbol profesional colombiano.",
+      "url": "https://fpcsimulator.online/",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "inLanguage": "es-CO",
+      "keywords": "Liga BetPlay, cuadrangulares, simulador fútbol colombiano, FPC, Dimayor",
+      "about": {
+        "@type": "SportsEvent",
+        "name": "Liga BetPlay 2025 II Cuadrangulares",
+        "sport": "Soccer",
+        "location": {
+          "@type": "Country",
+          "name": "Colombia"
+        }
+      }
+    }
+    </script>
+
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -158,12 +224,16 @@
         .position-circle {
             width: 32px;
             height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-block;
             border-radius: 50%;
             font-weight: 700;
             position: relative;
+            line-height: 32px;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
         }
         .qualified {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
@@ -450,6 +520,10 @@
                 width: 28px;
                 height: 28px;
                 font-size: 12px;
+                line-height: 28px;
+                padding: 0;
+                margin: 0;
+                display: inline-block;
             }
 
             /* Hide team names on mobile - show only logos */
@@ -686,6 +760,10 @@
                 width: 24px;
                 height: 24px;
                 font-size: 10px;
+                line-height: 24px;
+                padding: 0;
+                margin: 0;
+                display: inline-block;
             }
 
             /* Tighter column widths on very small screens */
@@ -723,6 +801,10 @@
                 width: 26px !important;
                 height: 26px !important;
                 font-size: 11px !important;
+                line-height: 26px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: inline-block !important;
             }
 
             /* Even smaller advantage badge on very small screens */
@@ -1434,7 +1516,7 @@
                     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.95));
                     const file = new File([blob], 'mi-simulacion-betplay-2025.png', { type: 'image/png' });
 
-                    const shareText = `🏆 Mi Simulación Liga BetPlay 2025\n\n` +
+                    const shareText = `🏆 Mi Simulación Liga BetPlay 2025 II\n\n` +
                         `Grupo A: ${groupAWinner}\n` +
                         `Grupo B: ${groupBWinner}\n\n` +
                         `¿Quién crees que ganará? 🤔`;
@@ -1445,7 +1527,7 @@
                             // Mobile: use native share
                             await navigator.share({
                                 files: [file],
-                                title: 'Mi Simulación Liga BetPlay 2025',
+                                title: 'Mi Simulación Liga BetPlay 2025 II',
                                 text: shareText
                             });
                         } else {
@@ -1502,10 +1584,11 @@
                     // MOBILE LAYOUT - Vertical, simplified
                     const renderMobileTable = (standings, groupName) => (
                         <div style={{
-                            padding: '20px',
+                            padding: '16px',
                             borderRadius: '12px',
                             backgroundColor: cardBg,
-                            marginBottom: '20px'
+                            marginBottom: '20px',
+                            overflow: 'hidden'
                         }}>
                             <h2 style={{
                                 fontSize: '20px',
@@ -1519,78 +1602,58 @@
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead>
                                     <tr style={{ borderBottom: `2px solid ${borderColor}` }}>
-                                        <th style={{ textAlign: 'center', padding: '10px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>POS</th>
-                                        <th style={{ textAlign: 'left', padding: '10px 8px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>EQUIPO</th>
-                                        <th style={{ textAlign: 'center', padding: '10px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>PJ</th>
-                                        <th style={{ textAlign: 'center', padding: '10px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>DIF</th>
-                                        <th style={{ textAlign: 'center', padding: '10px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>PTS</th>
+                                        <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>POS</th>
+                                        <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>🏅</th>
+                                        <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>PJ</th>
+                                        <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>DIF</th>
+                                        <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '10px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>PTS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {standings.map((team, index) => (
                                         <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}` }}>
-                                            <td style={{ padding: '10px 4px', textAlign: 'center' }}>
-                                                <div style={{
-                                                    width: '28px',
-                                                    height: '28px',
-                                                    borderRadius: '50%',
-                                                    display: 'inline-flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    fontSize: '13px',
-                                                    fontWeight: '700',
-                                                    background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0',
-                                                    color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
-                                                }}>
-                                                    {index + 1}
-                                                </div>
+                                            <td style={{
+                                                padding: '8px 4px',
+                                                textAlign: 'center',
+                                                verticalAlign: 'middle',
+                                                fontSize: '16px',
+                                                fontWeight: '800',
+                                                color: index === 0 ? '#10b981' : textPrimary
+                                            }}>
+                                                {index + 1}
                                             </td>
-                                            <td style={{ padding: '10px 8px' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <img
-                                                        src={TEAMS[team.team].logo}
-                                                        alt={team.team}
-                                                        style={{
-                                                            width: '28px',
-                                                            height: '28px',
-                                                            objectFit: 'contain',
-                                                            flexShrink: 0
-                                                        }}
-                                                    />
-                                                    <span style={{
-                                                        fontWeight: '600',
-                                                        fontSize: '12px',
-                                                        color: textPrimary,
-                                                        lineHeight: '1.2'
-                                                    }}>
-                                                        {team.team}
-                                                    </span>
-                                                </div>
+                                            <td style={{ padding: '8px 4px', textAlign: 'center' }}>
+                                                <img
+                                                    src={TEAMS[team.team].logo}
+                                                    alt={team.team}
+                                                    style={{
+                                                        width: '32px',
+                                                        height: '32px',
+                                                        objectFit: 'contain',
+                                                        display: 'inline-block'
+                                                    }}
+                                                />
                                             </td>
-                                            <td style={{ textAlign: 'center', padding: '10px 4px', fontSize: '13px', color: textPrimary, fontWeight: '500' }}>
+                                            <td style={{ textAlign: 'center', padding: '8px 4px', fontSize: '14px', color: textPrimary, fontWeight: '500' }}>
                                                 {team.played}
                                             </td>
                                             <td style={{
                                                 textAlign: 'center',
-                                                padding: '10px 4px',
-                                                fontSize: '13px',
+                                                padding: '8px 4px',
+                                                fontSize: '14px',
                                                 fontWeight: '700',
                                                 color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'
                                             }}>
                                                 {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
                                             </td>
-                                            <td style={{ textAlign: 'center', padding: '10px 4px' }}>
-                                                <span style={{
-                                                    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                                                    color: 'white',
-                                                    fontWeight: '700',
-                                                    fontSize: '13px',
-                                                    padding: '4px 10px',
-                                                    borderRadius: '6px',
-                                                    display: 'inline-block'
-                                                }}>
-                                                    {team.points}
-                                                </span>
+                                            <td style={{
+                                                textAlign: 'center',
+                                                padding: '8px 4px',
+                                                fontSize: '16px',
+                                                fontWeight: '800',
+                                                color: '#667eea'
+                                            }}>
+                                                {team.points}
                                             </td>
                                         </tr>
                                     ))}
@@ -1601,11 +1664,13 @@
 
                     return (
                         <div style={{
-                            padding: '24px',
-                            width: '400px',
+                            padding: '20px',
+                            width: '100%',
+                            maxWidth: '400px',
                             margin: '0 auto',
                             fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-                            backgroundColor: bgColor
+                            backgroundColor: bgColor,
+                            boxSizing: 'border-box'
                         }}>
                             {/* Header */}
                             <div style={{ textAlign: 'center', marginBottom: '24px' }}>
@@ -1615,7 +1680,7 @@
                                     color: textPrimary,
                                     marginBottom: '8px'
                                 }}>
-                                    🏆 Liga BetPlay 2025
+                                    🏆 Liga BetPlay 2025 II
                                 </h1>
                                 <p style={{
                                     fontSize: '15px',
@@ -1648,24 +1713,33 @@
                                 </p>
                                 <div style={{ marginBottom: '8px' }}>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
-                                        <img src={TEAMS[groupAWinner?.team].logo} alt="" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
-                                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#667eea' }}>
+                                        {homeTeam === groupAWinner?.team && (
+                                            <span style={{
+                                                fontSize: '20px'
+                                            }}>
+                                                🏠
+                                            </span>
+                                        )}
+                                        <img src={TEAMS[groupAWinner?.team].logo} alt="" style={{ width: '32px', height: '32px', objectFit: 'contain', flexShrink: 0 }} />
+                                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#667eea', lineHeight: '1.2' }}>
                                             {groupAWinner?.team}
                                         </span>
-                                        {homeTeam === groupAWinner?.team && <span style={{ fontSize: '16px' }}>🏠</span>}
                                     </div>
                                     <div style={{ fontSize: '18px', fontWeight: '700', color: textSecondary, margin: '4px 0' }}>VS</div>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                                        {homeTeam === groupBWinner?.team && <span style={{ fontSize: '16px' }}>🏠</span>}
-                                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#764ba2' }}>
+                                        <span style={{ fontSize: '16px', fontWeight: '700', color: '#764ba2', lineHeight: '1.2' }}>
                                             {groupBWinner?.team}
                                         </span>
-                                        <img src={TEAMS[groupBWinner?.team].logo} alt="" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
+                                        <img src={TEAMS[groupBWinner?.team].logo} alt="" style={{ width: '32px', height: '32px', objectFit: 'contain', flexShrink: 0 }} />
+                                        {homeTeam === groupBWinner?.team && (
+                                            <span style={{
+                                                fontSize: '20px'
+                                            }}>
+                                                🏠
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
-                                <p style={{ fontSize: '11px', color: textSecondary, marginTop: '8px' }}>
-                                    🏠 = Local en partido definitivo
-                                </p>
                             </div>
 
                             {/* Watermark */}
@@ -1677,10 +1751,10 @@
                                 border: `2px solid ${isDarkTheme ? 'rgba(102, 126, 234, 0.3)' : 'rgba(118, 75, 162, 0.3)'}`
                             }}>
                                 <div style={{ fontSize: '13px', fontWeight: '700', color: textPrimary, marginBottom: '4px' }}>
-                                    🏆 Liga BetPlay 2025
+                                    🏆 Liga BetPlay 2025 II
                                 </div>
                                 <div style={{ fontSize: '11px', color: textSecondary, fontWeight: '600' }}>
-                                    ligabetplay2025.com
+                                    fpcsimulator.online
                                 </div>
                             </div>
                         </div>
@@ -1722,28 +1796,16 @@
                             <tbody>
                                 {standings.map((team, index) => (
                                     <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}`, height: '56px' }}>
-                                        <td style={{ textAlign: 'center', padding: '12px 0', height: '56px' }}>
-                                            <div style={{
-                                                width: '32px',
-                                                height: '32px',
-                                                borderRadius: '50%',
-                                                display: 'inline-block',
-                                                textAlign: 'center',
-                                                position: 'relative',
-                                                background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0'
-                                            }}>
-                                                <span style={{
-                                                    position: 'absolute',
-                                                    top: '50%',
-                                                    left: '50%',
-                                                    transform: 'translate(-50%, -50%)',
-                                                    fontSize: '14px',
-                                                    fontWeight: '700',
-                                                    color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
-                                                }}>
-                                                    {index + 1}
-                                                </span>
-                                            </div>
+                                        <td style={{
+                                            textAlign: 'center',
+                                            padding: '12px 0',
+                                            height: '56px',
+                                            verticalAlign: 'middle',
+                                            fontSize: '18px',
+                                            fontWeight: '800',
+                                            color: index === 0 ? '#10b981' : textPrimary
+                                        }}>
+                                            {index + 1}
                                         </td>
                                         <td style={{ padding: '12px 8px', height: '56px' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1803,18 +1865,15 @@
                                         }}>
                                             {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '12px 0', height: '56px' }}>
-                                            <div style={{
-                                                background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                                                color: 'white',
-                                                fontWeight: '700',
-                                                fontSize: '15px',
-                                                padding: '8px 14px',
-                                                borderRadius: '8px',
-                                                display: 'inline-block'
-                                            }}>
-                                                {team.points}
-                                            </div>
+                                        <td style={{
+                                            textAlign: 'center',
+                                            padding: '12px 0',
+                                            height: '56px',
+                                            fontSize: '18px',
+                                            fontWeight: '800',
+                                            color: '#667eea'
+                                        }}>
+                                            {team.points}
                                         </td>
                                     </tr>
                                 ))}
@@ -1840,7 +1899,7 @@
                                 marginBottom: '12px',
                                 letterSpacing: '-0.5px'
                             }}>
-                                🏆 Liga BetPlay 2025
+                                🏆 Liga BetPlay 2025 II
                             </h1>
                             <p style={{
                                 fontSize: '22px',
@@ -1881,79 +1940,66 @@
                             </p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    {homeTeam === groupAWinner?.team && (
+                                        <span style={{
+                                            fontSize: '24px'
+                                        }}>
+                                            🏠
+                                        </span>
+                                    )}
                                     <img
                                         src={TEAMS[groupAWinner?.team].logo}
                                         alt={groupAWinner?.team}
                                         style={{
                                             width: '48px',
                                             height: '48px',
-                                            objectFit: 'contain'
+                                            objectFit: 'contain',
+                                            flexShrink: 0
                                         }}
                                     />
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                                        <span style={{
-                                            fontSize: '24px',
-                                            fontWeight: '800',
-                                            color: '#667eea'
-                                        }}>
-                                            {groupAWinner?.team}
-                                        </span>
-                                        {homeTeam === groupAWinner?.team && (
-                                            <span style={{
-                                                background: '#10b981',
-                                                color: 'white',
-                                                fontSize: '11px',
-                                                fontWeight: '700',
-                                                padding: '2px 6px',
-                                                borderRadius: '4px',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.3px'
-                                            }}>
-                                                Local
-                                            </span>
-                                        )}
-                                    </div>
+                                    <span style={{
+                                        fontSize: '24px',
+                                        fontWeight: '800',
+                                        color: '#667eea',
+                                        lineHeight: '1.2'
+                                    }}>
+                                        {groupAWinner?.team}
+                                    </span>
                                 </div>
                                 <span style={{
                                     fontSize: '28px',
                                     fontWeight: '700',
-                                    color: textSecondary
+                                    color: textSecondary,
+                                    lineHeight: '1'
                                 }}>
                                     VS
                                 </span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                                        {homeTeam === groupBWinner?.team && (
-                                            <span style={{
-                                                background: '#10b981',
-                                                color: 'white',
-                                                fontSize: '11px',
-                                                fontWeight: '700',
-                                                padding: '2px 6px',
-                                                borderRadius: '4px',
-                                                textTransform: 'uppercase',
-                                                letterSpacing: '0.3px'
-                                            }}>
-                                                Local
-                                            </span>
-                                        )}
-                                        <span style={{
-                                            fontSize: '24px',
-                                            fontWeight: '800',
-                                            color: '#764ba2'
-                                        }}>
-                                            {groupBWinner?.team}
-                                        </span>
-                                    </div>
+                                    <span style={{
+                                        fontSize: '24px',
+                                        fontWeight: '800',
+                                        color: '#764ba2',
+                                        lineHeight: '1.2'
+                                    }}>
+                                        {groupBWinner?.team}
+                                    </span>
                                     <img
                                         src={TEAMS[groupBWinner?.team].logo}
                                         alt={groupBWinner?.team}
                                         style={{
                                             width: '48px',
                                             height: '48px',
-                                            objectFit: 'contain'
+                                            objectFit: 'contain',
+                                            flexShrink: 0
                                         }}
                                     />
+                                    {homeTeam === groupBWinner?.team && (
+                                        <span style={{
+                                            fontSize: '24px'
+                                        }}>
+                                            🏠
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -1972,14 +2018,14 @@
                                 color: textPrimary,
                                 marginBottom: '6px'
                             }}>
-                                🏆 Liga BetPlay 2025 - Simulador de Cuadrangulares
+                                🏆 Liga BetPlay 2025 II - Simulador de Cuadrangulares
                             </div>
                             <div style={{
                                 fontSize: '14px',
                                 color: textSecondary,
                                 fontWeight: '600'
                             }}>
-                                Simula tu propia predicción en: ligabetplay2025.com
+                                Simula tu propia predicción en: fpcsimulator.online
                             </div>
                         </div>
                     </div>
@@ -2374,7 +2420,7 @@
                             <div className="glass rounded-2xl p-8 mb-6 shadow-xl">
                                 <div className="flex items-center justify-between flex-wrap gap-4">
                                     <div>
-                                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Liga BetPlay 2025</h1>
+                                        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Liga BetPlay 2025 II</h1>
                                         <p className="text-gray-600 text-lg">Cuadrangulares Semifinales</p>
                                     </div>
                                     <button
@@ -2448,7 +2494,7 @@
 
                         {activeTab === 'general' && (
                             <div className="glass rounded-2xl p-6 shadow-xl">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla General de Clasificación</h2>
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla General de Clasificación (Todos contra todos + cuadrangulares)</h2>
                                 <GeneralStandingsTable />
                                 
                                 {/* Final Matchup Information */}
@@ -2573,9 +2619,9 @@
                         {activeTab === 'reclasificacion' && (
                             <div className="glass rounded-2xl p-6 shadow-xl">
                                 <div className="mb-6">
-                                    <h2 className={`text-2xl font-bold mb-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>Tabla de Reclasificación 2024-2025</h2>
+                                    <h2 className={`text-2xl font-bold mb-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'}`}>Tabla de Reclasificación 2025</h2>
                                     <p className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
-                                        Estadísticas acumuladas del año: Liga BetPlay I 2024 + Liga BetPlay II 2025 (completa con Cuadrangulares)
+                                        Estadísticas acumuladas del año: Liga BetPlay I 2025 + Liga BetPlay II 2025 (completa con Cuadrangulares)
                                     </p>
                                 </div>
                                 <ReclasificacionTable />
@@ -2610,8 +2656,8 @@
                                 
                                 <div className={`mt-4 p-4 rounded-lg border-l-4 ${isDarkTheme ? 'bg-indigo-900/20 border-indigo-500/50' : 'bg-indigo-50 border-indigo-500'}`}>
                                     <p className={`text-sm ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
-                                        <strong>Tabla de Reclasificación 2024-2025:</strong> Muestra las estadísticas acumuladas de todos los equipos durante todo el año,
-                                        incluyendo la Liga BetPlay I 2024 completa y la Liga BetPlay II 2025 en curso (Fase Regular + Cuadrangulares Semifinales).
+                                        <strong>Tabla de Reclasificación 2025:</strong> Muestra las estadísticas acumuladas de todos los equipos durante todo el año,
+                                        incluyendo la Liga BetPlay I 2025 completa y la Liga BetPlay II 2025 en curso (Fase Regular + Cuadrangulares Semifinales).
                                         Esta tabla se usa para determinar descensos y clasificaciones a torneos internacionales.
                                     </p>
                                     <p className={`text-sm mt-2 ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -2625,10 +2671,10 @@
                         {/* Watermark for shared images */}
                         <div className="share-watermark">
                             <div className={`${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>
-                                🏆 Liga BetPlay 2025 - Simulador de Cuadrangulares
+                                🏆 Liga BetPlay 2025 II - Simulador de Cuadrangulares
                             </div>
                             <div className={`text-sm mt-1 ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
-                                Simula tu propia predicción en: ligabetplay2025.com
+                                Simula tu propia predicción en: fpcsimulator.online
                             </div>
                         </div>
 
