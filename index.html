@@ -1397,29 +1397,23 @@
                 setIsSharing(true);
 
                 try {
-                    // Get the shareable content element
-                    const element = document.querySelector('.shareable-content');
+                    // Get winners first
+                    const groupAStandings = calculateStandings('A');
+                    const groupBStandings = calculateStandings('B');
+                    const groupAWinner = groupAStandings[0]?.team || 'TBD';
+                    const groupBWinner = groupBStandings[0]?.team || 'TBD';
+
+                    // Get the share summary element (hidden container with both tables)
+                    const element = document.querySelector('.share-summary');
                     if (!element) {
                         throw new Error('Contenido no encontrado');
                     }
 
-                    // Hide elements we don't want in the screenshot
-                    const elementsToHide = [
-                        '.theme-toggle',
-                        '.share-button',
-                        'input[type="number"]'
-                    ];
+                    // Make it visible for screenshot
+                    element.style.display = 'block';
 
-                    const hiddenElements = [];
-                    elementsToHide.forEach(selector => {
-                        document.querySelectorAll(selector).forEach(el => {
-                            hiddenElements.push({ el, display: el.style.display });
-                            el.style.display = 'none';
-                        });
-                    });
-
-                    // Wait a bit for layout to settle
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    // Wait for layout
+                    await new Promise(resolve => setTimeout(resolve, 200));
 
                     // Generate the image
                     const canvas = await html2canvas(element, {
@@ -1427,40 +1421,47 @@
                         scale: 2,
                         logging: false,
                         useCORS: true,
-                        allowTaint: true,
-                        width: Math.min(element.scrollWidth, 1200),
-                        windowWidth: 1200
+                        allowTaint: true
                     });
 
-                    // Restore hidden elements
-                    hiddenElements.forEach(({ el, display }) => {
-                        el.style.display = display;
-                    });
+                    // Hide it again
+                    element.style.display = 'none';
 
                     // Convert to blob
                     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png', 0.95));
                     const file = new File([blob], 'mi-simulacion-betplay-2025.png', { type: 'image/png' });
-
-                    // Get winners for share text
-                    const groupAStandings = calculateStandings('A');
-                    const groupBStandings = calculateStandings('B');
-                    const groupAWinner = groupAStandings[0]?.team || 'TBD';
-                    const groupBWinner = groupBStandings[0]?.team || 'TBD';
 
                     const shareText = `🏆 Mi Simulación Liga BetPlay 2025\n\n` +
                         `Grupo A: ${groupAWinner}\n` +
                         `Grupo B: ${groupBWinner}\n\n` +
                         `¿Quién crees que ganará? 🤔`;
 
-                    // Try native share (works on mobile)
+                    // Check if native share is available AND user wants to use it
                     if (navigator.share && navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file],
-                            title: 'Mi Simulación Liga BetPlay 2025',
-                            text: shareText
-                        });
+                        // On desktop, give option to download or share
+                        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+                        if (isMobile) {
+                            // Mobile: use native share
+                            await navigator.share({
+                                files: [file],
+                                title: 'Mi Simulación Liga BetPlay 2025',
+                                text: shareText
+                            });
+                        } else {
+                            // Desktop: download directly
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = 'mi-simulacion-betplay-2025.png';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            alert('¡Imagen descargada! Compártela en tus redes sociales 📱');
+                        }
                     } else {
-                        // Fallback: download the image
+                        // Fallback: download
                         const url = URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.href = url;
@@ -1469,7 +1470,6 @@
                         a.click();
                         document.body.removeChild(a);
                         URL.revokeObjectURL(url);
-
                         alert('¡Imagen descargada! Compártela en tus redes sociales 📱');
                     }
                 } catch (error) {
@@ -1478,6 +1478,253 @@
                 } finally {
                     setIsSharing(false);
                 }
+            };
+
+            // Share Summary Component - Shows both group tables for sharing
+            const ShareSummaryView = () => {
+                const groupAStandings = calculateStandings('A');
+                const groupBStandings = calculateStandings('B');
+                const groupAWinner = groupAStandings[0];
+                const groupBWinner = groupBStandings[0];
+
+                return (
+                    <div style={{
+                        padding: '40px',
+                        maxWidth: '1000px',
+                        margin: '0 auto',
+                        fontFamily: 'Inter, sans-serif'
+                    }}>
+                        {/* Header */}
+                        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                            <h1 style={{
+                                fontSize: '32px',
+                                fontWeight: '800',
+                                color: isDarkTheme ? '#e0e0e0' : '#1a1a2e',
+                                marginBottom: '8px'
+                            }}>
+                                🏆 Liga BetPlay 2025
+                            </h1>
+                            <p style={{
+                                fontSize: '18px',
+                                color: isDarkTheme ? '#b0b0b0' : '#666',
+                                fontWeight: '600'
+                            }}>
+                                Mi Simulación de Cuadrangulares
+                            </p>
+                        </div>
+
+                        {/* Both Group Tables Side by Side */}
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '24px',
+                            marginBottom: '32px'
+                        }}>
+                            {/* Group A */}
+                            <div className="glass" style={{
+                                padding: '20px',
+                                borderRadius: '16px',
+                                backgroundColor: isDarkTheme ? 'rgba(30, 30, 46, 0.95)' : 'rgba(255, 255, 255, 0.95)'
+                            }}>
+                                <h2 style={{
+                                    fontSize: '20px',
+                                    fontWeight: '700',
+                                    marginBottom: '16px',
+                                    color: isDarkTheme ? '#e0e0e0' : '#1a1a2e',
+                                    textAlign: 'center'
+                                }}>
+                                    Grupo A
+                                </h2>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr style={{ borderBottom: '2px solid ' + (isDarkTheme ? '#444' : '#ddd') }}>
+                                            <th style={{ textAlign: 'left', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>POS</th>
+                                            <th style={{ textAlign: 'left', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>EQUIPO</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>PJ</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>DIF</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>PTS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {groupAStandings.map((team, index) => (
+                                            <tr key={team.team} style={{ borderBottom: '1px solid ' + (isDarkTheme ? '#333' : '#eee') }}>
+                                                <td style={{ padding: '10px 4px' }}>
+                                                    <div style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                        borderRadius: '50%',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        fontSize: '12px',
+                                                        fontWeight: '700',
+                                                        background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#ddd',
+                                                        color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
+                                                    }}>
+                                                        {index + 1}
+                                                    </div>
+                                                </td>
+                                                <td style={{ padding: '10px 4px', fontWeight: '600', fontSize: '13px', color: isDarkTheme ? '#e0e0e0' : '#333' }}>
+                                                    {team.team}
+                                                </td>
+                                                <td style={{ textAlign: 'center', padding: '10px 4px', fontSize: '13px', color: isDarkTheme ? '#d0d0d0' : '#555' }}>
+                                                    {team.played}
+                                                </td>
+                                                <td style={{
+                                                    textAlign: 'center',
+                                                    padding: '10px 4px',
+                                                    fontSize: '13px',
+                                                    fontWeight: '700',
+                                                    color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'
+                                                }}>
+                                                    {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
+                                                </td>
+                                                <td style={{ textAlign: 'center', padding: '10px 4px' }}>
+                                                    <span style={{
+                                                        background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                                                        color: 'white',
+                                                        fontWeight: '700',
+                                                        fontSize: '14px',
+                                                        padding: '4px 12px',
+                                                        borderRadius: '8px'
+                                                    }}>
+                                                        {team.points}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Group B */}
+                            <div className="glass" style={{
+                                padding: '20px',
+                                borderRadius: '16px',
+                                backgroundColor: isDarkTheme ? 'rgba(30, 30, 46, 0.95)' : 'rgba(255, 255, 255, 0.95)'
+                            }}>
+                                <h2 style={{
+                                    fontSize: '20px',
+                                    fontWeight: '700',
+                                    marginBottom: '16px',
+                                    color: isDarkTheme ? '#e0e0e0' : '#1a1a2e',
+                                    textAlign: 'center'
+                                }}>
+                                    Grupo B
+                                </h2>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                    <thead>
+                                        <tr style={{ borderBottom: '2px solid ' + (isDarkTheme ? '#444' : '#ddd') }}>
+                                            <th style={{ textAlign: 'left', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>POS</th>
+                                            <th style={{ textAlign: 'left', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>EQUIPO</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>PJ</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>DIF</th>
+                                            <th style={{ textAlign: 'center', padding: '8px 4px', fontSize: '11px', color: isDarkTheme ? '#888' : '#666' }}>PTS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {groupBStandings.map((team, index) => (
+                                            <tr key={team.team} style={{ borderBottom: '1px solid ' + (isDarkTheme ? '#333' : '#eee') }}>
+                                                <td style={{ padding: '10px 4px' }}>
+                                                    <div style={{
+                                                        width: '24px',
+                                                        height: '24px',
+                                                        borderRadius: '50%',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        fontSize: '12px',
+                                                        fontWeight: '700',
+                                                        background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#ddd',
+                                                        color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
+                                                    }}>
+                                                        {index + 1}
+                                                    </div>
+                                                </td>
+                                                <td style={{ padding: '10px 4px', fontWeight: '600', fontSize: '13px', color: isDarkTheme ? '#e0e0e0' : '#333' }}>
+                                                    {team.team}
+                                                </td>
+                                                <td style={{ textAlign: 'center', padding: '10px 4px', fontSize: '13px', color: isDarkTheme ? '#d0d0d0' : '#555' }}>
+                                                    {team.played}
+                                                </td>
+                                                <td style={{
+                                                    textAlign: 'center',
+                                                    padding: '10px 4px',
+                                                    fontSize: '13px',
+                                                    fontWeight: '700',
+                                                    color: team.goalDiff > 0 ? '#10b981' : team.goalDiff < 0 ? '#ef4444' : '#6b7280'
+                                                }}>
+                                                    {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
+                                                </td>
+                                                <td style={{ textAlign: 'center', padding: '10px 4px' }}>
+                                                    <span style={{
+                                                        background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                                                        color: 'white',
+                                                        fontWeight: '700',
+                                                        fontSize: '14px',
+                                                        padding: '4px 12px',
+                                                        borderRadius: '8px'
+                                                    }}>
+                                                        {team.points}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* Final Info */}
+                        <div className="glass" style={{
+                            padding: '20px',
+                            borderRadius: '16px',
+                            textAlign: 'center',
+                            backgroundColor: isDarkTheme ? 'rgba(30, 30, 46, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                            marginBottom: '24px'
+                        }}>
+                            <p style={{
+                                fontSize: '18px',
+                                fontWeight: '700',
+                                color: isDarkTheme ? '#e0e0e0' : '#1a1a2e',
+                                marginBottom: '8px'
+                            }}>
+                                🏟️ Final Predicha
+                            </p>
+                            <p style={{
+                                fontSize: '20px',
+                                fontWeight: '800',
+                                color: '#667eea'
+                            }}>
+                                {groupAWinner?.team} vs {groupBWinner?.team}
+                            </p>
+                        </div>
+
+                        {/* Watermark */}
+                        <div style={{
+                            textAlign: 'center',
+                            padding: '16px',
+                            background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)',
+                            borderRadius: '12px'
+                        }}>
+                            <div style={{
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                color: isDarkTheme ? '#e0e0e0' : '#1a1a2e',
+                                marginBottom: '4px'
+                            }}>
+                                🏆 Liga BetPlay 2025 - Simulador de Cuadrangulares
+                            </div>
+                            <div style={{
+                                fontSize: '12px',
+                                color: isDarkTheme ? '#b0b0b0' : '#666',
+                                fontWeight: '600'
+                            }}>
+                                Simula tu propia predicción en: ligabetplay2025.com
+                            </div>
+                        </div>
+                    </div>
+                );
             };
 
             const StandingsTable = ({ standings, group }) => (
@@ -2129,6 +2376,11 @@
                         </div>
                         {/* End Shareable Content */}
                     </div>
+                </div>
+
+                {/* Hidden Share Summary - Only visible during capture */}
+                <div className="share-summary" style={{display: 'none'}}>
+                    <ShareSummaryView />
                 </div>
 
                 {/* Loading Overlay */}
