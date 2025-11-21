@@ -1707,7 +1707,7 @@
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: `2px solid ${borderColor}` }}>
-                                    <th style={{ textAlign: 'left', padding: '12px 8px', fontSize: '11px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>POS</th>
+                                    <th style={{ textAlign: 'center', padding: '12px 8px', fontSize: '11px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>POS</th>
                                     <th style={{ textAlign: 'left', padding: '12px 8px', fontSize: '11px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>EQUIPO</th>
                                     <th style={{ textAlign: 'center', padding: '12px 6px', fontSize: '11px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>PJ</th>
                                     <th style={{ textAlign: 'center', padding: '12px 6px', fontSize: '11px', color: textSecondary, fontWeight: '600', textTransform: 'uppercase' }}>G</th>
@@ -1722,12 +1722,12 @@
                             <tbody>
                                 {standings.map((team, index) => (
                                     <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}` }}>
-                                        <td style={{ padding: '12px 8px' }}>
+                                        <td style={{ textAlign: 'center', padding: '12px 8px' }}>
                                             <div style={{
                                                 width: '32px',
                                                 height: '32px',
                                                 borderRadius: '50%',
-                                                display: 'flex',
+                                                display: 'inline-flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
                                                 fontSize: '14px',
@@ -1740,15 +1740,24 @@
                                         </td>
                                         <td style={{ padding: '12px 8px' }}>
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                                <img
-                                                    src={TEAMS[team.team].logo}
-                                                    alt={team.team}
-                                                    style={{
-                                                        width: '32px',
-                                                        height: '32px',
-                                                        objectFit: 'contain'
-                                                    }}
-                                                />
+                                                <div style={{
+                                                    width: '32px',
+                                                    height: '32px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    flexShrink: 0
+                                                }}>
+                                                    <img
+                                                        src={TEAMS[team.team].logo}
+                                                        alt={team.team}
+                                                        style={{
+                                                            maxWidth: '32px',
+                                                            maxHeight: '32px',
+                                                            objectFit: 'contain'
+                                                        }}
+                                                    />
+                                                </div>
                                                 <span style={{
                                                     fontWeight: '600',
                                                     fontSize: '14px',
@@ -1858,11 +1867,11 @@
                                 fontSize: '20px',
                                 fontWeight: '700',
                                 color: textPrimary,
-                                marginBottom: '12px'
+                                marginBottom: '16px'
                             }}>
                                 🏟️ Final Predicha
                             </p>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px', marginBottom: '12px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                     <img
                                         src={TEAMS[groupAWinner?.team].logo}
@@ -1880,19 +1889,6 @@
                                     }}>
                                         {groupAWinner?.team}
                                     </span>
-                                    {homeTeam === groupAWinner?.team && (
-                                        <span style={{
-                                            fontSize: '20px',
-                                            background: 'linear-gradient(135deg, #10b981, #059669)',
-                                            color: 'white',
-                                            padding: '4px 12px',
-                                            borderRadius: '8px',
-                                            fontWeight: '700',
-                                            fontSize: '14px'
-                                        }}>
-                                            🏠 Local
-                                        </span>
-                                    )}
                                 </div>
                                 <span style={{
                                     fontSize: '28px',
@@ -1902,19 +1898,6 @@
                                     VS
                                 </span>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                    {homeTeam === groupBWinner?.team && (
-                                        <span style={{
-                                            fontSize: '20px',
-                                            background: 'linear-gradient(135deg, #10b981, #059669)',
-                                            color: 'white',
-                                            padding: '4px 12px',
-                                            borderRadius: '8px',
-                                            fontWeight: '700',
-                                            fontSize: '14px'
-                                        }}>
-                                            🏠 Local
-                                        </span>
-                                    )}
                                     <span style={{
                                         fontSize: '24px',
                                         fontWeight: '800',
@@ -1932,6 +1915,17 @@
                                         }}
                                     />
                                 </div>
+                            </div>
+                            <div style={{
+                                display: 'inline-block',
+                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                color: 'white',
+                                padding: '6px 16px',
+                                borderRadius: '8px',
+                                fontWeight: '700',
+                                fontSize: '14px'
+                            }}>
+                                🏠 {homeTeam} juega en casa
                             </div>
                         </div>
 
