@@ -1044,9 +1044,9 @@
             'América de Cali': { played: 20, wins: 8, draws: 5, losses: 7, goalsFor: 23, goalsAgainst: 19 }
         };
 
-        // Reclasificación 2024-2025 - ADJUSTED to exclude Jornada 1 playoff games
-        // DIMAYOR table includes Jornada 1 results, so we subtract them to avoid double counting
-        // Jornada 1 results: Junior 1-0 Medellín, Fortaleza 0-1 Tolima, Bucaramanga 1-0 Santa Fe
+        // Reclasificación 2024-2025 - ADJUSTED to include Jornada 1 playoff games
+        // DIMAYOR table includes Jornada 1 results
+        // Jornada 1 results: Junior 1-0 Medellín, Nacional 1-0 América, Fortaleza 0-1 Tolima, Bucaramanga 1-0 Santa Fe
         const ALL_TEAMS_RECLASIFICACION = {
             'Independiente Medellín': { 
                 // Original DIMAYOR: 87 pts, 49 PJ | Subtract Jornada 1: -0 pts, -1 PJ, -0 GF, -1 GC
@@ -1062,9 +1062,9 @@
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/7635',
                 phaseIIPoints: 38, inPlayoffs: true
             },
-            'Atlético Nacional': { 
-                // No Jornada 1 game yet
-                points: 80, played: 46, wins: 22, draws: 14, losses: 10, 
+            'Atlético Nacional': {
+                // Jornada 1 result will be added by simulator (Nacional 1-0 América)
+                points: 80, played: 46, wins: 22, draws: 14, losses: 10,
                 goalsFor: 80, goalsAgainst: 50,
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/8640',
                 phaseIIPoints: 37, inPlayoffs: true
@@ -1076,9 +1076,9 @@
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/7644',
                 phaseIIPoints: 31, inPlayoffs: true
             },
-            'América de Cali': { 
-                // No Jornada 1 game yet
-                points: 77, played: 46, wins: 21, draws: 14, losses: 11, 
+            'América de Cali': {
+                // Jornada 1 result will be added by simulator (Nacional 1-0 América)
+                points: 77, played: 46, wins: 21, draws: 14, losses: 11,
                 goalsFor: 59, goalsAgainst: 38,
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8645',
                 phaseIIPoints: 29, inPlayoffs: true
@@ -1249,7 +1249,7 @@
         const INITIAL_FIXTURES = {
             'A': [
                 { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
-                { jornada: 1, home: 'Atlético Nacional', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 1, home: 'Atlético Nacional', away: 'América de Cali', homeGoals: 1, awayGoals: 0, played: true },
                 { jornada: 2, home: 'Independiente Medellín', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 3, home: 'América de Cali', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
