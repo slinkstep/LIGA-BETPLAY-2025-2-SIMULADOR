@@ -1722,7 +1722,7 @@
                             <tbody>
                                 {standings.map((team, index) => (
                                     <tr key={team.team} style={{ borderBottom: `1px solid ${borderColor}`, height: '56px' }}>
-                                        <td style={{ textAlign: 'center', padding: '0', height: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '0', height: '56px', verticalAlign: 'middle' }}>
                                             <div style={{
                                                 width: '32px',
                                                 height: '32px',
@@ -1732,10 +1732,9 @@
                                                 justifyContent: 'center',
                                                 fontSize: '14px',
                                                 fontWeight: '700',
-                                                lineHeight: '32px',
+                                                lineHeight: '1',
                                                 background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0',
-                                                color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666',
-                                                verticalAlign: 'middle'
+                                                color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
                                             }}>
                                                 {index + 1}
                                             </div>
@@ -1799,7 +1798,7 @@
                                         }}>
                                             {team.goalDiff > 0 ? '+' : ''}{team.goalDiff}
                                         </td>
-                                        <td style={{ textAlign: 'center', padding: '0', height: '56px' }}>
+                                        <td style={{ textAlign: 'center', padding: '0', height: '56px', verticalAlign: 'middle' }}>
                                             <span style={{
                                                 background: 'linear-gradient(135deg, #667eea, #764ba2)',
                                                 color: 'white',
@@ -1808,8 +1807,7 @@
                                                 padding: '8px 14px',
                                                 borderRadius: '8px',
                                                 display: 'inline-block',
-                                                lineHeight: '15px',
-                                                verticalAlign: 'middle'
+                                                lineHeight: '1'
                                             }}>
                                                 {team.points}
                                             </span>
@@ -1878,38 +1876,41 @@
                                 🏟️ Final Predicha
                             </p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                        <img
-                                            src={TEAMS[groupAWinner?.team].logo}
-                                            alt={groupAWinner?.team}
-                                            style={{
-                                                width: '48px',
-                                                height: '48px',
-                                                objectFit: 'contain'
-                                            }}
-                                        />
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <img
+                                        src={TEAMS[groupAWinner?.team].logo}
+                                        alt={groupAWinner?.team}
+                                        style={{
+                                            width: '48px',
+                                            height: '48px',
+                                            objectFit: 'contain'
+                                        }}
+                                    />
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                                         <span style={{
                                             fontSize: '24px',
                                             fontWeight: '800',
-                                            color: '#667eea'
+                                            color: '#667eea',
+                                            lineHeight: '1.2'
                                         }}>
                                             {groupAWinner?.team}
                                         </span>
+                                        {homeTeam === groupAWinner?.team && (
+                                            <span style={{
+                                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                                color: 'white',
+                                                fontSize: '10px',
+                                                fontWeight: '700',
+                                                padding: '3px 8px',
+                                                borderRadius: '8px',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px',
+                                                alignSelf: 'flex-start'
+                                            }}>
+                                                🏠 LOCAL
+                                            </span>
+                                        )}
                                     </div>
-                                    {homeTeam === groupAWinner?.team && (
-                                        <span style={{
-                                            background: 'linear-gradient(135deg, #10b981, #059669)',
-                                            color: 'white',
-                                            fontSize: '11px',
-                                            fontWeight: '700',
-                                            padding: '4px 10px',
-                                            borderRadius: '12px',
-                                            textTransform: 'uppercase'
-                                        }}>
-                                            LOCAL
-                                        </span>
-                                    )}
                                 </div>
                                 <span style={{
                                     fontSize: '28px',
@@ -1918,38 +1919,41 @@
                                 }}>
                                     VS
                                 </span>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
                                         <span style={{
                                             fontSize: '24px',
                                             fontWeight: '800',
-                                            color: '#764ba2'
+                                            color: '#764ba2',
+                                            lineHeight: '1.2'
                                         }}>
                                             {groupBWinner?.team}
                                         </span>
-                                        <img
-                                            src={TEAMS[groupBWinner?.team].logo}
-                                            alt={groupBWinner?.team}
-                                            style={{
-                                                width: '48px',
-                                                height: '48px',
-                                                objectFit: 'contain'
-                                            }}
-                                        />
+                                        {homeTeam === groupBWinner?.team && (
+                                            <span style={{
+                                                background: 'linear-gradient(135deg, #10b981, #059669)',
+                                                color: 'white',
+                                                fontSize: '10px',
+                                                fontWeight: '700',
+                                                padding: '3px 8px',
+                                                borderRadius: '8px',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px',
+                                                alignSelf: 'flex-end'
+                                            }}>
+                                                🏠 LOCAL
+                                            </span>
+                                        )}
                                     </div>
-                                    {homeTeam === groupBWinner?.team && (
-                                        <span style={{
-                                            background: 'linear-gradient(135deg, #10b981, #059669)',
-                                            color: 'white',
-                                            fontSize: '11px',
-                                            fontWeight: '700',
-                                            padding: '4px 10px',
-                                            borderRadius: '12px',
-                                            textTransform: 'uppercase'
-                                        }}>
-                                            LOCAL
-                                        </span>
-                                    )}
+                                    <img
+                                        src={TEAMS[groupBWinner?.team].logo}
+                                        alt={groupBWinner?.team}
+                                        style={{
+                                            width: '48px',
+                                            height: '48px',
+                                            objectFit: 'contain'
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
