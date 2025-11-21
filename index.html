@@ -1728,14 +1728,21 @@
                                                 height: '32px',
                                                 borderRadius: '50%',
                                                 display: 'inline-block',
-                                                fontSize: '14px',
-                                                fontWeight: '700',
-                                                lineHeight: '32px',
                                                 textAlign: 'center',
-                                                background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0',
-                                                color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
+                                                position: 'relative',
+                                                background: index === 0 ? 'linear-gradient(135deg, #10b981, #059669)' : isDarkTheme ? '#444' : '#e0e0e0'
                                             }}>
-                                                {index + 1}
+                                                <span style={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    fontSize: '14px',
+                                                    fontWeight: '700',
+                                                    color: index === 0 ? 'white' : isDarkTheme ? '#aaa' : '#666'
+                                                }}>
+                                                    {index + 1}
+                                                </span>
                                             </div>
                                         </td>
                                         <td style={{ padding: '12px 8px', height: '56px' }}>
