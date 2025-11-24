@@ -250,15 +250,15 @@
             transform: scale(1.05);
         }
         .team-logo {
-            width: 28px;
-            height: 28px;
+            width: 36px;
+            height: 36px;
             object-fit: contain;
             border-radius: 4px;
             padding: 2px;
         }
         .team-logo-fallback {
-            width: 28px;
-            height: 28px;
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 4px;
             display: flex;
@@ -287,6 +287,14 @@
         }
         .qualified {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .qualification-libertadores {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+        }
+        .qualification-sudamericana {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: white;
         }
         input[type="number"] {
@@ -620,10 +628,10 @@
                 justify-content: center !important;
             }
 
-            /* Make logos slightly bigger since they're the only identifier */
+            /* Make logos bigger for better visibility with abbreviations */
             .team-logo, .team-logo-fallback {
-                width: 24px !important;
-                height: 24px !important;
+                width: 32px !important;
+                height: 32px !important;
                 font-size: 11px !important;
             }
 
@@ -651,15 +659,6 @@
             /* Keep team name row items together */
             td:nth-child(2) .flex.items-center:not(.flex-wrap) {
                 flex-wrap: nowrap !important;
-            }
-
-            /* Add visual indicator for qualification status on mobile */
-            .position-circle.qualified::after {
-                content: '⚽';
-                position: absolute;
-                top: -4px;
-                right: -4px;
-                font-size: 10px;
             }
 
             /* Fix match cards and content clipping */
@@ -841,10 +840,10 @@
                 font-size: 9px !important;
             }
 
-            /* Slightly smaller logos on very small screens */
+            /* Logos on very small screens */
             .team-logo, .team-logo-fallback {
-                width: 22px !important;
-                height: 22px !important;
+                width: 28px !important;
+                height: 28px !important;
             }
 
             .position-circle {
@@ -1042,41 +1041,49 @@
         const TEAMS = {
             'Independiente Medellín': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8643',
+                abbr: 'DIM',
                 advantage: true,
                 leaguePoints: 40
             },
             'Deportes Tolima': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/7635',
+                abbr: 'TOL',
                 advantage: true,
                 leaguePoints: 38
             },
             'Atlético Nacional': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v3/Competitors/8640',
+                abbr: 'NAL',
                 advantage: false,
                 leaguePoints: 37
             },
             'Atlético Bucaramanga': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/10224',
+                abbr: 'BUC',
                 advantage: false,
                 leaguePoints: 37
             },
             'Atlético Junior': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v2/Competitors/7204',
+                abbr: 'JUN',
                 advantage: false,
                 leaguePoints: 35
             },
             'Fortaleza CEIF': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/9844',
+                abbr: 'FOR',
                 advantage: false,
                 leaguePoints: 35
             },
             'Santa Fe': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/7644',
+                abbr: 'SFE',
                 advantage: false,
                 leaguePoints: 31
             },
             'América de Cali': {
                 logo: 'https://imagecache.365scores.com/image/upload/f_png,w_24,h_24,c_limit,q_auto:eco,dpr_3,d_Competitors:default1.png/v1/Competitors/8645',
+                abbr: 'AME',
                 advantage: false,
                 leaguePoints: 29
             }
@@ -1297,18 +1304,18 @@
         };
 
         // DATA VERSION - Increment this when you update match results to force a refresh
-        const DATA_VERSION = 3; // Updated: Added Nacional 1-0 América result
+        const DATA_VERSION = 4; // Updated: Added Nacional 1-0 América result
 
         const INITIAL_FIXTURES = {
             'A': [
                 { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
                 { jornada: 1, home: 'Atlético Nacional', away: 'América de Cali', homeGoals: 1, awayGoals: 0, played: true },
-                { jornada: 2, home: 'Independiente Medellín', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
-                { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
-                { jornada: 3, home: 'América de Cali', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 2, home: 'Independiente Medellín', away: 'Atlético Nacional', homeGoals: 0, awayGoals: 0, played: true },
+                { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: 0, awayGoals: 0, played: true },
                 { jornada: 3, home: 'Atlético Nacional', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
-                { jornada: 4, home: 'Independiente Medellín', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 3, home: 'América de Cali', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 4, home: 'Atlético Junior', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
+                { jornada: 4, home: 'Independiente Medellín', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 5, home: 'Atlético Junior', away: 'América de Cali', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 5, home: 'Atlético Nacional', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 6, home: 'Independiente Medellín', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
@@ -2180,7 +2187,10 @@
                                             <div className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-3 flex-1">
                                                     <TeamLogo team={match.home} />
-                                                    <span className="font-semibold text-gray-800 text-sm">{match.home}</span>
+                                                    <span className="font-semibold text-gray-800 text-sm">
+                                                        <span className="md:hidden">{TEAMS[match.home].abbr}</span>
+                                                        <span className="hidden md:inline">{match.home}</span>
+                                                    </span>
                                                 </div>
                                                 
                                                 <div className="flex items-center gap-3">
@@ -2220,7 +2230,10 @@
                                                 </div>
 
                                                 <div className="flex items-center gap-3 flex-1 justify-end">
-                                                    <span className="font-semibold text-gray-800 text-sm text-right">{match.away}</span>
+                                                    <span className="font-semibold text-gray-800 text-sm text-right">
+                                                        <span className="md:hidden">{TEAMS[match.away].abbr}</span>
+                                                        <span className="hidden md:inline">{match.away}</span>
+                                                    </span>
                                                     <TeamLogo team={match.away} />
                                                 </div>
                                             </div>
@@ -2406,13 +2419,22 @@
                             <tbody>
                                 {reclasificacionStandings.map((team, index) => {
                                     const goalDiff = team.goalsFor - team.goalsAgainst;
-                                    const isQualified = index < 8; // Top 8 qualify to playoffs
                                     const qualification = qualificationMap[team.team];
-                                    
+
+                                    // Determine position circle color based on qualification
+                                    let positionClass = isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700';
+                                    if (qualification) {
+                                        if (qualification.tournament === 'Libertadores') {
+                                            positionClass = 'qualification-libertadores';
+                                        } else if (qualification.tournament === 'Sudamericana') {
+                                            positionClass = 'qualification-sudamericana';
+                                        }
+                                    }
+
                                     return (
                                         <tr key={team.team} className={`border-b transition-colors ${isDarkTheme ? 'border-gray-800 hover:bg-gray-800/50' : 'border-gray-100 hover:bg-gray-50'}`}>
                                             <td className="py-3 px-2">
-                                                <div className={`position-circle ${isQualified ? 'qualified' : isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
+                                                <div className={`position-circle ${positionClass}`}>
                                                     {index + 1}
                                                 </div>
                                             </td>
@@ -2514,19 +2536,28 @@
                         {/* Tabs */}
                         <div className="glass rounded-2xl p-2 mb-6 shadow-lg">
                             <div className="flex flex-wrap gap-2">
-                                {['grupoA', 'grupoB', 'general', 'reclasificacion'].map(tab => (
-                                    <button
-                                        key={tab}
-                                        onClick={() => setActiveTab(tab)}
-                                        className={`flex-1 min-w-[120px] px-6 py-3 rounded-xl font-semibold transition-all ${
-                                            activeTab === tab
-                                                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                                                : isDarkTheme ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'
-                                        }`}
-                                    >
-                                        {tab === 'grupoA' ? 'Grupo A' : tab === 'grupoB' ? 'Grupo B' : tab === 'general' ? 'Tabla General' : 'Reclasificación'}
-                                    </button>
-                                ))}
+                                {['grupoA', 'grupoB', 'general', 'reclasificacion'].map(tab => {
+                                    const labels = {
+                                        grupoA: { short: 'Grupo A', full: 'Grupo A' },
+                                        grupoB: { short: 'Grupo B', full: 'Grupo B' },
+                                        general: { short: 'General', full: 'Tabla General' },
+                                        reclasificacion: { short: 'Reclas.', full: 'Reclasificación' }
+                                    };
+                                    return (
+                                        <button
+                                            key={tab}
+                                            onClick={() => setActiveTab(tab)}
+                                            className={`flex-1 min-w-[80px] px-4 py-3 rounded-xl font-semibold transition-all ${
+                                                activeTab === tab
+                                                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+                                                    : isDarkTheme ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'
+                                            }`}
+                                        >
+                                            <span className="md:hidden">{labels[tab].short}</span>
+                                            <span className="hidden md:inline">{labels[tab].full}</span>
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
 
@@ -2690,7 +2721,24 @@
                                     </p>
                                 </div>
                                 <ReclasificacionTable />
-                                
+
+                                {/* Color Legend for Position Indicators */}
+                                <div className="mt-4 flex flex-wrap gap-4 justify-center md:justify-start items-center">
+                                    <span className={`text-sm font-semibold ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>Leyenda:</span>
+                                    <div className="flex items-center gap-2">
+                                        <div className="position-circle qualification-libertadores" style={{width: '32px', height: '32px', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                            🥇
+                                        </div>
+                                        <span className={`text-sm font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>Libertadores</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="position-circle qualification-sudamericana" style={{width: '32px', height: '32px', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                            🥈
+                                        </div>
+                                        <span className={`text-sm font-medium ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}>Sudamericana</span>
+                                    </div>
+                                </div>
+
                                 {/* International Qualification Legend */}
                                 <div className="mt-6 grid md:grid-cols-2 gap-4">
                                     <div className={`p-4 rounded-lg border-l-4 border-blue-500 ${isDarkTheme ? 'bg-blue-900/20' : 'bg-blue-50'}`}>
