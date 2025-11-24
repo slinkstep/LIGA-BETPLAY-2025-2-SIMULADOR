@@ -56,7 +56,9 @@
       "offers": {
         "@type": "Offer",
         "price": "0",
-        "priceCurrency": "USD"
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "2025-11-18"
       },
       "inLanguage": "es-CO",
       "keywords": "fixture cuadrangulares liga betplay 2025, resultados cuadrangulares liga betplay 2025, partidos cuadrangulares liga betplay 2025, medellin vs nacional final, nacional vs medellin final, final copa betplay, simulador fútbol colombiano, FPC, Dimayor",
@@ -87,7 +89,8 @@
           "url": "https://fpcsimulator.online/",
           "price": "0",
           "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock"
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2025-11-18"
         }
       }
     }
@@ -1304,14 +1307,14 @@
         };
 
         // DATA VERSION - Increment this when you update match results to force a refresh
-        const DATA_VERSION = 6; // Second leg
+        const DATA_VERSION = 10; // Updated: Added Nacional 1-0 América result
 
         const INITIAL_FIXTURES = {
             'A': [
                 { jornada: 1, home: 'Atlético Junior', away: 'Independiente Medellín', homeGoals: 1, awayGoals: 0, played: true },
                 { jornada: 1, home: 'Atlético Nacional', away: 'América de Cali', homeGoals: 1, awayGoals: 0, played: true },
                 { jornada: 2, home: 'Independiente Medellín', away: 'Atlético Nacional', homeGoals: 0, awayGoals: 0, played: true },
-                { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: 1, awayGoals: 1, played: true },
+                { jornada: 2, home: 'América de Cali', away: 'Atlético Junior', homeGoals: 0, awayGoals: 0, played: true },
                 { jornada: 3, home: 'Atlético Nacional', away: 'Atlético Junior', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 3, home: 'América de Cali', away: 'Independiente Medellín', homeGoals: null, awayGoals: null, played: false },
                 { jornada: 4, home: 'Atlético Junior', away: 'Atlético Nacional', homeGoals: null, awayGoals: null, played: false },
