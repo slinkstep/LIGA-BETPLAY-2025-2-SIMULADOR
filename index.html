@@ -119,6 +119,43 @@
     }
     </script>
 
+    <!-- FAQ Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "¿Cuántos equipos clasifican a los cuadrangulares de la Liga BetPlay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los 8 mejores equipos de la fase regular (todos contra todos de 20 fechas) clasifican a los cuadrangulares semifinales, dividiéndose en dos grupos de 4 equipos cada uno."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Qué es la ventaja deportiva en los cuadrangulares?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los equipos que terminan en las posiciones 1 y 2 de la fase regular tienen ventaja deportiva. Si hay empate en puntos con equipos de las posiciones 3 a 8, los equipos con ventaja deportiva clasifican automáticamente, sin importar otros criterios."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Cuántos partidos se juegan en cuadrangulares?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cada equipo juega 6 partidos en total (3 en casa y 3 de visitante), enfrentando dos veces a cada uno de los otros tres equipos de su grupo. En total son 12 partidos por grupo, 24 partidos en total de cuadrangulares."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Cómo se define el campeón de la Liga BetPlay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los líderes de cada grupo juegan una final a ida y vuelta. Si después de los dos partidos hay empate en goles, no se considera el valor doble de gol de visitante (regla eliminada). En caso de empate, se juega tiempo extra y eventualmente penales si es necesario."
+        }
+      }]
+    }
+    </script>
+
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9814982707828565"
      crossorigin="anonymous"></script>
@@ -2177,15 +2214,16 @@
 
                 return (
                     <div className="space-y-6">
-                        {Object.entries(groupedByJornada).map(([jornada, matches]) => (
-                            <div key={jornada}>
-                                <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>
-                                    <span className={`px-3 py-1 rounded-lg ${isDarkTheme ? 'bg-indigo-900/50 text-indigo-300' : 'bg-indigo-100 text-indigo-700'}`}>
-                                        Jornada {jornada}
-                                    </span>
-                                </h3>
-                                <div className="space-y-3">
-                                    {matches.map((match) => (
+                        {Object.entries(groupedByJornada).map(([jornada, matches], jornadaIndex) => (
+                            <React.Fragment key={jornada}>
+                                <div>
+                                    <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>
+                                        <span className={`px-3 py-1 rounded-lg ${isDarkTheme ? 'bg-indigo-900/50 text-indigo-300' : 'bg-indigo-100 text-indigo-700'}`}>
+                                            Jornada {jornada}
+                                        </span>
+                                    </h3>
+                                    <div className="space-y-3">
+                                        {matches.map((match) => (
                                         <div key={match.index} className="glass rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
                                             <div className="flex items-center justify-between gap-4">
                                                 <div className="flex items-center gap-3 flex-1">
@@ -2241,9 +2279,25 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+
+                                {/* AdSense Ad - Between Jornada 2 and 3 */}
+                                {jornada === '2' && (
+                                    <>
+                                        <div style={{margin: '20px auto', textAlign: 'center', maxWidth: '728px', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                            <ins className="adsbygoogle"
+                                                 style={{display: 'block', minHeight: '90px'}}
+                                                 data-ad-client="ca-pub-9814982707828565"
+                                                 data-ad-slot="8901234567"
+                                                 data-ad-format="auto"
+                                                 data-full-width-responsive="true"></ins>
+                                        </div>
+                                        <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
+                                    </>
+                                )}
+                            </React.Fragment>
                         ))}
                     </div>
                 );
@@ -2566,29 +2620,77 @@
 
                         {/* Content */}
                         {activeTab === 'grupoA' && (
-                            <div className="grid lg:grid-cols-2 gap-6">
-                                <div className="glass rounded-2xl p-6 shadow-xl">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo A</h2>
-                                    <StandingsTable standings={calculateStandings('A')} group="A" />
+                            <>
+                                <div className="grid lg:grid-cols-2 gap-6">
+                                    <div className="glass rounded-2xl p-6 shadow-xl">
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo A</h2>
+                                        <StandingsTable standings={calculateStandings('A')} group="A" />
+
+                                        {/* AdSense Ad - Below Tabla Grupo A */}
+                                        <div style={{margin: '20px auto 0', textAlign: 'center', maxWidth: '100%', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                            <ins className="adsbygoogle"
+                                                 style={{display: 'block', minHeight: '90px'}}
+                                                 data-ad-client="ca-pub-9814982707828565"
+                                                 data-ad-slot="9012345678"
+                                                 data-ad-format="auto"
+                                                 data-full-width-responsive="true"></ins>
+                                        </div>
+                                        <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
+                                    </div>
+                                    <div className="glass rounded-2xl p-6 shadow-xl">
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo A</h2>
+                                        <FixturesList group="A" />
+                                    </div>
                                 </div>
-                                <div className="glass rounded-2xl p-6 shadow-xl">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo A</h2>
-                                    <FixturesList group="A" />
+
+                                {/* AdSense Ad - Below Grupo A */}
+                                <div style={{margin: '30px auto', textAlign: 'center', maxWidth: '728px', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                    <ins className="adsbygoogle"
+                                         style={{display: 'block', minHeight: '90px'}}
+                                         data-ad-client="ca-pub-9814982707828565"
+                                         data-ad-slot="4567890123"
+                                         data-ad-format="auto"
+                                         data-full-width-responsive="true"></ins>
                                 </div>
-                            </div>
+                                <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
+                            </>
                         )}
 
                         {activeTab === 'grupoB' && (
-                            <div className="grid lg:grid-cols-2 gap-6">
-                                <div className="glass rounded-2xl p-6 shadow-xl">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo B</h2>
-                                    <StandingsTable standings={calculateStandings('B')} group="B" />
+                            <>
+                                <div className="grid lg:grid-cols-2 gap-6">
+                                    <div className="glass rounded-2xl p-6 shadow-xl">
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Tabla Grupo B</h2>
+                                        <StandingsTable standings={calculateStandings('B')} group="B" />
+
+                                        {/* AdSense Ad - Below Tabla Grupo B */}
+                                        <div style={{margin: '20px auto 0', textAlign: 'center', maxWidth: '100%', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                            <ins className="adsbygoogle"
+                                                 style={{display: 'block', minHeight: '90px'}}
+                                                 data-ad-client="ca-pub-9814982707828565"
+                                                 data-ad-slot="0123456789"
+                                                 data-ad-format="auto"
+                                                 data-full-width-responsive="true"></ins>
+                                        </div>
+                                        <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
+                                    </div>
+                                    <div className="glass rounded-2xl p-6 shadow-xl">
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo B</h2>
+                                        <FixturesList group="B" />
+                                    </div>
                                 </div>
-                                <div className="glass rounded-2xl p-6 shadow-xl">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Resultados Grupo B</h2>
-                                    <FixturesList group="B" />
+
+                                {/* AdSense Ad - Below Grupo B */}
+                                <div style={{margin: '30px auto', textAlign: 'center', maxWidth: '728px', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                    <ins className="adsbygoogle"
+                                         style={{display: 'block', minHeight: '90px'}}
+                                         data-ad-client="ca-pub-9814982707828565"
+                                         data-ad-slot="5678901234"
+                                         data-ad-format="auto"
+                                         data-full-width-responsive="true"></ins>
                                 </div>
-                            </div>
+                                <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
+                            </>
                         )}
 
                         {activeTab === 'general' && (
@@ -2712,6 +2814,17 @@
                                         En caso de empate en puntos totales, se aplican los criterios 3-6 anteriores, y finalmente sorteo si persiste el empate.
                                     </p>
                                 </div>
+
+                                {/* AdSense Ad - Below Tabla General */}
+                                <div style={{margin: '30px auto', textAlign: 'center', maxWidth: '728px', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                    <ins className="adsbygoogle"
+                                         style={{display: 'block', minHeight: '90px'}}
+                                         data-ad-client="ca-pub-9814982707828565"
+                                         data-ad-slot="6789012345"
+                                         data-ad-format="auto"
+                                         data-full-width-responsive="true"></ins>
+                                </div>
+                                <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
                             </div>
                         )}
 
@@ -2781,6 +2894,17 @@
                                         Sudamericana: campeón de la Copa BetPlay (final Medellín vs Nacional; si el campeón ya está en Libertadores el cupo pasa al siguiente en la tabla) y los puestos 3° a 5° de la reclasificación sin Libertadores.
                                     </p>
                                 </div>
+
+                                {/* AdSense Ad - Below Reclasificación */}
+                                <div style={{margin: '30px auto', textAlign: 'center', maxWidth: '728px', minHeight: '90px', padding: '10px', background: isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.02)', borderRadius: '12px'}}>
+                                    <ins className="adsbygoogle"
+                                         style={{display: 'block', minHeight: '90px'}}
+                                         data-ad-client="ca-pub-9814982707828565"
+                                         data-ad-slot="7890123456"
+                                         data-ad-format="auto"
+                                         data-full-width-responsive="true"></ins>
+                                </div>
+                                <script dangerouslySetInnerHTML={{__html: '(adsbygoogle = window.adsbygoogle || []).push({});'}} />
                             </div>
                         )}
 
@@ -2820,5 +2944,279 @@
 
         ReactDOM.render(<App />, document.getElementById('root'));
     </script>
+
+    <!-- SEO Content Section - Below the fold -->
+    <section style="padding: 40px 20px; margin-top: 60px;">
+        <div style="max-width: 1200px; margin: 0 auto; line-height: 1.8;">
+
+            <!-- Main H1 for SEO -->
+            <div class="glass" style="text-align: center; margin-bottom: 30px; padding: 40px 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 15px; line-height: 1.3;" class="text-gray-900">
+                    Simulador de Cuadrangulares Liga BetPlay 2025 II - Fixture Completo y Resultados en Vivo
+                </h1>
+                <p style="font-size: 18px; max-width: 900px; margin: 0 auto;" class="text-gray-700">
+                    Simula partidos, predice resultados y calcula automáticamente las tablas de posiciones con los criterios oficiales de DIMAYOR.
+                    Incluye tabla de reclasificación, cupos internacionales y toda la información del fútbol profesional colombiano.
+                </p>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">¿Qué son los Cuadrangulares de la Liga BetPlay?</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    Los <strong>cuadrangulares semifinales de la Liga BetPlay</strong> son la fase decisiva del fútbol profesional colombiano,
+                    donde los ocho mejores equipos de la fase regular se enfrentan en dos grupos de cuatro equipos cada uno.
+                    Esta emocionante etapa del torneo determina quiénes serán los dos finalistas que disputarán el título de campeón.
+                </p>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    Durante la <strong>Liga BetPlay 2025 II</strong>, los equipos clasificados incluyen a gigantes del fútbol colombiano como
+                    <strong>Atlético Nacional</strong>, <strong>Independiente Medellín</strong>, <strong>Deportes Tolima</strong>,
+                    <strong>Atlético Junior</strong>, <strong>América de Cali</strong>, <strong>Atlético Bucaramanga</strong>,
+                    <strong>Fortaleza CEIF</strong> y <strong>Santa Fe</strong>. Cada uno de estos equipos ha demostrado su nivel
+                    durante los 20 partidos de la fase todos contra todos.
+                </p>
+            </div>
+
+            <!-- AdSense Ad Unit 1 - After Introduction -->
+            <div style="margin: 40px auto; text-align: center; min-height: 250px; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+                <ins class="adsbygoogle"
+                     style="display:block; text-align:center;"
+                     data-ad-layout="in-article"
+                     data-ad-format="fluid"
+                     data-ad-client="ca-pub-9814982707828565"
+                     data-ad-slot="1234567890"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">Formato de los Cuadrangulares Semifinales</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    El formato de los cuadrangulares es simple pero emocionante: cada equipo enfrenta a los otros tres equipos de su grupo
+                    dos veces (ida y vuelta), para un total de 6 partidos por equipo. Los puntos obtenidos en esta fase se suman a los
+                    puntos acumulados en la fase regular para determinar las posiciones finales y clasificación a torneos internacionales.
+                </p>
+                <h3 style="font-size: 22px; font-weight: 600; color: #667eea; margin: 25px 0 15px 0;">Criterios de Desempate</h3>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    Según el <strong>reglamento de DIMAYOR</strong> (Artículo 10), en caso de empate en puntos entre equipos,
+                    se aplican los siguientes criterios en orden:
+                </p>
+                <ol style="margin-left: 25px; margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    <li style="margin-bottom: 8px;"><strong>Mayor puntuación</strong> obtenida en los partidos de cuadrangulares</li>
+                    <li style="margin-bottom: 8px;"><strong>Ventaja deportiva:</strong> Si hay empate entre equipos que terminaron en posiciones 1°-2°
+                        de la fase regular contra equipos de posiciones 3°-8°, clasifican automáticamente los de posiciones superiores</li>
+                    <li style="margin-bottom: 8px;"><strong>Mayor diferencia de gol</strong> en los partidos de cuadrangulares</li>
+                    <li style="margin-bottom: 8px;"><strong>Mayor cantidad de goles a favor</strong> en cuadrangulares</li>
+                    <li style="margin-bottom: 8px;"><strong>Mayor cantidad de goles como visitante</strong> en cuadrangulares</li>
+                    <li style="margin-bottom: 8px;"><strong>Menor cantidad de goles en contra como visitante</strong></li>
+                    <li style="margin-bottom: 0;"><strong>Mejor posición en la Fase I</strong> (Todos contra Todos)</li>
+                </ol>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">La Final de la Liga BetPlay 2025</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    Los líderes de cada grupo al finalizar los cuadrangulares clasifican a la <strong>gran final</strong>, que se juega
+                    a ida y vuelta. La ventaja de localía (definir en casa) se determina por la puntuación total acumulada
+                    (fase regular + cuadrangulares). El equipo con más puntos totales será <strong>visitante en la ida</strong> y
+                    <strong>local en la vuelta</strong>, lo que le da la oportunidad de definir el campeonato en su estadio.
+                </p>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    En la final de la <strong>Liga BetPlay II 2025</strong>, los aficionados esperan un duelo épico entre los mejores
+                    equipos del semestre. Los partidos de vuelta en casa suelen ser determinantes, con estadios llenos y una atmósfera
+                    electrizante que caracteriza al fútbol profesional colombiano.
+                </p>
+            </div>
+
+            <!-- AdSense Ad Unit 2 - Mid Content -->
+            <div style="margin: 40px auto; text-align: center; min-height: 250px; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-format="fluid"
+                     data-ad-layout-key="-6t+ed+2i-1n-4w"
+                     data-ad-client="ca-pub-9814982707828565"
+                     data-ad-slot="2345678901"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">Tabla de Reclasificación 2024-2025</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    La <strong>tabla de reclasificación</strong> es fundamental en el fútbol colombiano, ya que determina tanto los descensos
+                    como la clasificación a torneos internacionales. Esta tabla acumula los resultados de todo el año futbolístico:
+                    <strong>Liga BetPlay I 2024</strong> y <strong>Liga BetPlay II 2025</strong> (incluyendo fase regular y cuadrangulares).
+                </p>
+                <h3 style="font-size: 22px; font-weight: 600; color: #667eea; margin: 25px 0 15px 0;">Clasificación a Torneos Internacionales 2026</h3>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    Los mejores equipos de la reclasificación obtienen cupos para competir en las principales competiciones de Conmebol:
+                </p>
+                <ul style="margin-left: 25px; margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    <li style="margin-bottom: 8px;"><strong>Copa Libertadores 2026:</strong> Se clasifican los campeones de los dos torneos
+                        del año (Liga I y Liga II), más los dos mejores equipos de la tabla de reclasificación que no sean campeones.
+                        Con <strong>Santa Fe</strong> como campeón de la Liga I 2025, ya hay un cupo asegurado.</li>
+                    <li style="margin-bottom: 0;"><strong>Copa Sudamericana 2026:</strong> Obtienen cupos el campeón de la
+                        <strong>Copa BetPlay 2025</strong> (final entre Nacional y Medellín) y los equipos en posiciones 3° a 5° de la
+                        reclasificación que no hayan clasificado a Libertadores. Si el campeón de Copa BetPlay ya está en Libertadores,
+                        el cupo pasa al siguiente en la tabla.</li>
+                </ul>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">Equipos Protagonistas de la Liga BetPlay 2025</h2>
+
+                <h3 style="font-size: 22px; font-weight: 600; color: #667eea; margin: 25px 0 15px 0;">Grupo A</h3>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Independiente Medellín:</strong> El "Poderoso de la Montaña" llega a los cuadrangulares como líder del Grupo A
+                    con 40 puntos en la fase regular. Con ventaja deportiva, Medellín busca su estrella 20 y además está en la final de
+                    la Copa BetPlay contra Nacional. Su plantilla experimentada y el respaldo de su hinchada en el Atanasio Girardot los
+                    hace candidatos al título.
+                </p>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Atlético Nacional:</strong> El equipo más ganador de Colombia (18 estrellas) llega con 37 puntos y sed de revancha.
+                    Los "Verdolagas" tienen una de las nóminas más valiosas del país y buscan recuperar el protagonismo. Su enfrentamiento
+                    contra Medellín en cuadrangulares y la final de Copa BetPlay prometen ser duelos épicos.
+                </p>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Atlético Junior:</strong> El "Tiburón" de Barranquilla (35 puntos) es uno de los equipos más regulares del
+                    FPC. Con su fortaleza en casa y juego ofensivo, busca volver a una final después de su último título en 2023.
+                </p>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    <strong>América de Cali:</strong> Los "Diablos Rojos" (29 puntos) llegan como el equipo con menos puntos del Grupo A,
+                    pero su historia y tradición los hace peligrosos. Necesitan sumar de visitante para soñar con la final.
+                </p>
+
+                <h3 style="font-size: 22px; font-weight: 600; color: #667eea; margin: 25px 0 15px 0;">Grupo B</h3>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Deportes Tolima:</strong> El "Vinotinto y Oro" lidera el Grupo B con 38 puntos y ventaja deportiva.
+                    Campeón en 2018, 2021 y 2023, Tolima es conocido por su solidez defensiva y juego táctico. Su casa, el estadio Manuel
+                    Murillo Toro en Ibagué, es una verdadera fortaleza.
+                </p>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Atlético Bucaramanga:</strong> El "Leopardo" (37 puntos) ha sido la revelación del torneo. Después de años
+                    de irregularidad, Bucaramanga muestra un fútbol sólido tras conquistar su primera estrella en 2024-I.
+                </p>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <strong>Fortaleza CEIF:</strong> El equipo bogotano (35 puntos) ha crecido exponencialmente en los últimos años.
+                    Su juego ordenado y disciplina táctica los ha convertido en un rival difícil para cualquiera.
+                </p>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    <strong>Santa Fe:</strong> El "Cardenal" (31 puntos) llega como campeón de la Liga I 2025 y con boleto asegurado
+                    a la Libertadores 2026. Su experiencia en finales y plantilla competitiva los hace candidatos para repetir el título.
+                </p>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">Cómo Usar Este Simulador de Cuadrangulares</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    Nuestro <strong>simulador interactivo</strong> te permite experimentar con diferentes escenarios y predecir los resultados
+                    de los cuadrangulares de la Liga BetPlay 2025. Es la herramienta perfecta para:
+                </p>
+                <ul style="margin-left: 25px; margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <li style="margin-bottom: 8px;">Simular todos los partidos de los cuadrangulares semifinales</li>
+                    <li style="margin-bottom: 8px;">Ver en tiempo real cómo cambian las tablas de posiciones según los resultados</li>
+                    <li style="margin-bottom: 8px;">Calcular automáticamente los criterios de desempate según el reglamento oficial</li>
+                    <li style="margin-bottom: 8px;">Predecir quiénes serán los finalistas y quién tendrá ventaja de localía</li>
+                    <li style="margin-bottom: 8px;">Consultar la tabla de reclasificación actualizada con cupos internacionales</li>
+                    <li style="margin-bottom: 0;">Compartir tus predicciones en redes sociales</li>
+                </ul>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    Simplemente ingresa los resultados en los marcadores de cada partido y observa cómo se actualizan automáticamente
+                    las tablas. El simulador aplica todas las reglas oficiales de DIMAYOR, incluyendo ventaja deportiva, diferencia de
+                    goles y todos los criterios de desempate. ¡Descubre qué equipo tiene más posibilidades de llegar a la final!
+                </p>
+            </div>
+
+            <!-- AdSense Ad Unit 3 - Before FAQs -->
+            <div style="margin: 40px auto; text-align: center; min-height: 250px; background: #f5f5f5; padding: 20px; border-radius: 8px;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-9814982707828565"
+                     data-ad-slot="3456789012"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 20px;" class="text-gray-900">Historia Reciente de la Liga BetPlay</h2>
+                <p style="margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    La <strong>Liga BetPlay</strong>, anteriormente conocida como Liga Águila y Liga Postobón, es el torneo de primera
+                    división más importante de Colombia, organizado por la División Mayor del Fútbol Colombiano (DIMAYOR).
+                    En los últimos años, hemos visto campeones como:
+                </p>
+                <ul style="margin-left: 25px; margin-bottom: 15px; font-size: 16px;" class="text-gray-700">
+                    <li style="margin-bottom: 8px;"><strong>2024-II:</strong> Atlético Nacional (derrotó 3-1 a Deportes Tolima en la final)</li>
+                    <li style="margin-bottom: 8px;"><strong>2024-I:</strong> Atlético Bucaramanga (su primera estrella en la historia)</li>
+                    <li style="margin-bottom: 8px;"><strong>2023-II:</strong> Atlético Junior (derrotó en penales a Medellín)</li>
+                    <li style="margin-bottom: 8px;"><strong>2023-I:</strong> Millonarios (derrotó en penales a Atlético Nacional)</li>
+                    <li style="margin-bottom: 8px;"><strong>2022-II:</strong> Deportivo Pereira</li>
+                    <li style="margin-bottom: 0;"><strong>2022-I:</strong> Atlético Nacional</li>
+                </ul>
+                <p style="margin-bottom: 0; font-size: 16px;" class="text-gray-700">
+                    El formato actual con cuadrangulares semifinales se implementó hace varias décadas y se ha convertido en una de las
+                    características distintivas del fútbol profesional colombiano, generando emoción hasta el último partido de la fase
+                    de grupos.
+                </p>
+            </div>
+
+            <div class="glass" style="margin-bottom: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 25px;" class="text-gray-900">Preguntas Frecuentes sobre los Cuadrangulares</h2>
+
+                <div style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #667eea; margin-bottom: 10px;">¿Cuántos equipos clasifican a los cuadrangulares?</h3>
+                    <p style="font-size: 16px; margin-bottom: 0;" class="text-gray-700">
+                        Los 8 mejores equipos de la fase regular (todos contra todos de 20 fechas) clasifican a los cuadrangulares
+                        semifinales, dividiéndose en dos grupos de 4 equipos cada uno.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #667eea; margin-bottom: 10px;">¿Qué es la ventaja deportiva?</h3>
+                    <p style="font-size: 16px; margin-bottom: 0;" class="text-gray-700">
+                        Los equipos que terminan en las posiciones 1 y 2 de la fase regular tienen ventaja deportiva. Si hay empate en
+                        puntos con equipos de las posiciones 3 a 8, los equipos con ventaja deportiva clasifican automáticamente,
+                        sin importar otros criterios.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #667eea; margin-bottom: 10px;">¿Cuántos partidos se juegan en cuadrangulares?</h3>
+                    <p style="font-size: 16px; margin-bottom: 0;" class="text-gray-700">
+                        Cada equipo juega 6 partidos en total (3 en casa y 3 de visitante), enfrentando dos veces a cada uno de los otros
+                        tres equipos de su grupo. En total son 12 partidos por grupo, 24 partidos en total de cuadrangulares.
+                    </p>
+                </div>
+
+                <div style="margin-bottom: 0;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #667eea; margin-bottom: 10px;">¿Cómo se define el campeón de la Liga BetPlay?</h3>
+                    <p style="font-size: 16px; margin-bottom: 0;" class="text-gray-700">
+                        Los líderes de cada grupo juegan una final a ida y vuelta. Si después de los dos partidos hay empate en goles,
+                        no se considera el valor doble de gol de visitante (regla eliminada). En caso de empate, se juega tiempo extra
+                        y eventualmente penales si es necesario.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass" style="margin-top: 30px; padding: 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); text-align: center;">
+                <p style="font-size: 14px; margin-bottom: 10px; font-weight: 600;" class="text-gray-900">
+                    FPC Simulator - Simulador de Cuadrangulares Liga BetPlay 2025
+                </p>
+                <p style="font-size: 13px; margin-bottom: 10px;" class="text-gray-700">
+                    Herramienta interactiva para simular los cuadrangulares semifinales del fútbol profesional colombiano.
+                    Actualizamos constantemente con los resultados oficiales de DIMAYOR.
+                </p>
+                <p style="font-size: 12px; margin-bottom: 0;" class="text-gray-600">
+                    Este simulador utiliza los criterios oficiales del reglamento de DIMAYOR. Los logos y marcas de los equipos son
+                    propiedad de sus respectivos clubes. No estamos afiliados con DIMAYOR, Win Sports ni ningún equipo de fútbol.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
 </body>
 </html>
